@@ -1,9 +1,5 @@
-/*
- * Configuración comercial.
- * Completar antes de publicar el subdominio definitivo.
- */
 window.PRIMOFFICE_SITE_CONFIG = {
-  preview: true,
-  whatsappNumber: "",
-  corporateEmail: ""
+  preview: false,
+  whatsappNumber: "5491139149688",
+  corporateEmail: "info@primoffice.com.ar"
 };

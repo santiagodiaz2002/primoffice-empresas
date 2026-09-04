@@ -4,7 +4,6 @@
   const config = window.PRIMOFFICE_SITE_CONFIG || {};
   const navToggle = document.querySelector("[data-nav-toggle]");
   const nav = document.querySelector("[data-nav]");
-  const previewNote = document.querySelector("[data-preview-note]");
   const form = document.querySelector("[data-contact-form]");
   const formStatus = document.querySelector("[data-form-status]");
   const formNote = document.querySelector("[data-form-note]");
@@ -14,10 +13,6 @@
   document.querySelectorAll("[data-year]").forEach((node) => {
     node.textContent = String(new Date().getFullYear());
   });
-
-  if (config.preview && previewNote) {
-    previewNote.hidden = false;
-  }
 
   if (dateInput) {
     const now = new Date();
@@ -66,26 +61,34 @@
   });
 
   const normalizeWhatsApp = (value) => String(value || "").replace(/\D/g, "");
+  const formatWhatsApp = (value) => {
+    const argentina = value.match(/^54(9)(\d{2})(\d{4})(\d{4})$/);
+    return argentina
+      ? `+54 9 ${argentina[2]} ${argentina[3]}-${argentina[4]}`
+      : `+${value}`;
+  };
   const whatsappNumber = normalizeWhatsApp(config.whatsappNumber);
   const corporateEmail = String(config.corporateEmail || "").trim();
 
   document.querySelectorAll("[data-wa-link]").forEach((link) => {
-    if (!whatsappNumber) {
-      link.setAttribute("title", "WhatsApp pendiente de configurar");
-      return;
-    }
-    const text = "Hola PrimOffice, quiero consultar por una propuesta corporativa.";
+    if (!whatsappNumber) return;
+    const text = "Hola PrimOffice, quiero consultar por una propuesta para mi empresa.";
     link.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
   });
 
+  document.querySelectorAll("[data-wa-display]").forEach((node) => {
+    if (whatsappNumber) node.textContent = formatWhatsApp(whatsappNumber);
+  });
+
   document.querySelectorAll("[data-email-link]").forEach((link) => {
-    if (!corporateEmail) {
-      link.setAttribute("title", "Email corporativo pendiente de configurar");
-      return;
-    }
+    if (!corporateEmail) return;
     link.href = `mailto:${corporateEmail}?subject=${encodeURIComponent("Consulta corporativa PrimOffice")}`;
+  });
+
+  document.querySelectorAll("[data-email-display]").forEach((node) => {
+    if (corporateEmail) node.textContent = corporateEmail;
   });
 
   const formatDate = (value) => {
@@ -96,15 +99,15 @@
 
   const buildMessage = (data) => {
     const lines = [
-      "Hola PrimOffice, quiero consultar por una propuesta corporativa.",
+      "Hola PrimOffice, quiero consultar por una propuesta para mi empresa.",
       "",
-      `Nombre: ${data.get("nombre") || ""}`,
-      `Empresa: ${data.get("empresa") || ""}`,
-      `Contacto: ${data.get("contacto") || ""}`,
+      `Nombre: ${String(data.get("nombre") || "").trim()}`,
+      `Empresa: ${String(data.get("empresa") || "").trim()}`,
+      `Contacto: ${String(data.get("contacto") || "").trim()}`,
+      `Proyecto: ${String(data.get("tipo") || "").trim()}`,
+      data.get("cantidad") ? `Cantidad aproximada: ${String(data.get("cantidad")).trim()}` : "",
       `Fecha objetivo: ${formatDate(data.get("fecha"))}`,
-      data.get("cantidad") ? `Cantidad aproximada: ${data.get("cantidad")}` : "",
-      `Proyecto: ${data.get("tipo") || ""}`,
-      data.get("detalle") ? `Detalle: ${data.get("detalle")}` : ""
+      data.get("detalle") ? `Detalle: ${String(data.get("detalle")).trim()}` : ""
     ];
     return lines.filter(Boolean).join("\n");
   };
@@ -120,9 +123,9 @@
   };
 
   if (form) {
-    if (!config.preview && (whatsappNumber || corporateEmail) && formNote) {
+    if ((whatsappNumber || corporateEmail) && formNote) {
       formNote.textContent = whatsappNumber
-        ? "Al enviar, abrimos WhatsApp con los datos de tu consulta ya cargados."
+        ? "Al enviar, abrimos WhatsApp con los datos de tu consulta ya cargados. Este sitio no guarda tu información."
         : "Al enviar, preparamos un email con los datos de tu consulta.";
     }
 
@@ -153,8 +156,8 @@
 
       const copied = await copyText(message);
       formStatus.textContent = copied
-        ? "Vista previa: copiamos la consulta al portapapeles. Falta configurar WhatsApp o email antes de publicar."
-        : "Vista previa: falta configurar WhatsApp o email antes de publicar.";
+        ? "Copiamos la consulta al portapapeles porque no hay un canal de contacto disponible."
+        : "No hay un canal de contacto disponible en este momento.";
     });
   }
 })();

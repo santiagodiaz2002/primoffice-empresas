@@ -100,19 +100,6 @@ textarea {
   transform: translateY(0);
 }
 
-.preview-note {
-  position: relative;
-  z-index: 120;
-  padding: 7px 20px;
-  color: #614e13;
-  background: #fff4c7;
-  border-bottom: 1px solid #e9d47e;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.45;
-  text-align: center;
-}
-
 .site-header {
   position: sticky;
   z-index: 100;
@@ -1447,11 +1434,6 @@ textarea {
 @media (max-width: 680px) {
   .container {
     width: min(var(--container), calc(100% - 32px));
-  }
-
-  .preview-note {
-    padding-inline: 14px;
-    font-size: 0.67rem;
   }
 
   .hero {

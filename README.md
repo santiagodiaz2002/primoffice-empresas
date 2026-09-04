@@ -38,26 +38,21 @@ primoffice-empresas/
 
 No hay build ni dependencias. Se puede abrir `site/index.html` directamente o servir la carpeta `site/` con cualquier servidor estático.
 
-## Configuración comercial antes de publicar
+## Configuración comercial
 
 Editar `site/assets/js/config.js`:
 
 ```js
 window.PRIMOFFICE_SITE_CONFIG = {
   preview: false,
-  whatsappNumber: "549...",
-  corporateEmail: "...@primoffice.com.ar"
+  whatsappNumber: "5491139149688",
+  corporateEmail: "info@primoffice.com.ar"
 };
 ```
 
-Mientras `preview` sea `true`, la web muestra un aviso de vista previa y el formulario no intenta enviar datos a un canal no configurado.
+El formulario valida los campos requeridos y abre WhatsApp con la consulta completa. El sitio no guarda la información. El email configurado se ofrece como canal alternativo mediante `mailto:`.
 
-## GitHub Desktop
-
-1. Descomprimir este proyecto en la carpeta definitiva.
-2. En GitHub Desktop: **File → Add local repository** y elegir la carpeta `primoffice-empresas`.
-3. El repositorio local ya incluye `.git`, branch `main` y commit inicial.
-4. Pulsar **Publish repository** para crear/subir el remoto a GitHub con el nombre `primoffice-empresas`.
+Aunque la configuración funcional usa `preview: false`, `site/index.html` conserva `noindex,nofollow` mientras la landing se revisa en el hostname temporal.
 
 ## Cloudflare Pages — configuración recomendada
 
@@ -71,7 +66,9 @@ Configuración:
 - Build output directory: `site`
 - Root directory: raíz del repo
 
-Cloudflare Pages entrega automáticamente una URL `*.pages.dev` después del primer deploy.
+La revisión pública actual se realiza en:
+
+`https://primoffice-empresas.primoffice.workers.dev/`
 
 Documentación oficial revisada para esta estructura:
 
@@ -98,10 +95,10 @@ Documentación oficial:
 
 - Se eliminaron del sitio público los testimonios inventados del borrador original.
 - No se publicaron nombres técnicos de producto que Martín indicó que no corresponden.
-- No se conservaron promesas comerciales exactas como plazos, mínimos o condiciones que no quedaron confirmadas en las notas.
+- Se incorporaron las condiciones comerciales confirmadas para esta etapa desde el HTML corporativo original.
 - Se usaron fotos reales recibidas en el ZIP.
 - Las marcas mostradas en la galería/marquee se limitaron a marcas visibles en ese material.
 - La sección de casos de éxito queda reservada hasta recibir casos reales de Martín.
-- WhatsApp y email quedan desacoplados en `config.js` para no hardcodear datos no confirmados.
+- WhatsApp y email reales quedan centralizados en `config.js`.
 
-Ver `docs/CONTENT_STATUS.md` antes de pasar de preview a producción.
+Ver `docs/CONTENT_STATUS.md` antes de configurar el dominio definitivo.

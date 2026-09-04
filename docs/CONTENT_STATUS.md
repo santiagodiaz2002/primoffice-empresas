@@ -1,21 +1,23 @@
 # Estado de contenido y fuente de verdad
 
-## Confirmado por las notas de reunión
+## Confirmado e implementado
 
-- La landing es para empresas.
-- Casos de uso: regalos corporativos, kits de bienvenida y fin de año.
-- Los productos pueden llevar branding de la empresa.
-- PrimOffice trabaja con producto propio.
-- La cotización debe plantearse como ágil, sin fijar un plazo exacto no confirmado.
-- Existe showroom.
-- La landing debe explicar cómo se trabaja y por qué elegir PrimOffice.
-- Deben usarse fotos reales de productos/trabajos.
-- Debe existir una franja de marcas/logos en loop sobre fondo neutro.
-- Los testimonios/casos de éxito inventados no se deben publicar.
-- Martín debe entregar los casos de éxito reales.
-- Debe existir contacto por WhatsApp, email y un formulario breve.
-- El formulario debe pedir, entre otros datos, la fecha para la que se necesita el proyecto.
-- El destino final debe ser un subdominio de PrimOffice.
+- La landing está orientada a empresas: regalos corporativos, kits de bienvenida y fin de año, productos con branding, acciones corporativas y proyectos especiales.
+- PrimOffice trabaja con producto propio y personalización corporativa.
+- WhatsApp Business: `5491139149688`.
+- Email corporativo: `info@primoffice.com.ar`, verificado en el sitio oficial de PrimOffice.
+- Showroom: Aguirre 407, Villa Crespo, CABA. Las consultas de esta landing se coordinan con cita previa.
+- Respuesta inicial el mismo día hábil y propuesta/cotización con mockups de marca y precio en 48 h.
+- Producción entre 10 y 20 días hábiles, según personalización y cantidad, desde la aprobación del arte.
+- Cantidad mínima de 25 unidades para la mayoría de los productos y kits armados con packaging desde 15; para cantidades menores se invita a consultar.
+- Envíos a todo el país, a una dirección o individualizados para colaboradores, con seguimiento por envío.
+- Factura A y B, órdenes de compra, posibilidad de contemplar los plazos de pago habituales de la empresa y alta como proveedor.
+- Capacidades documentadas: grabado láser sobre aluminio, hot stamping en cuero, impresión en packaging, tarjetas y cintas, color personalizado en mats, mockups de marca y kitting.
+- El formulario valida los datos y abre WhatsApp con el mensaje completo. El sitio no almacena la información enviada.
+- El email funciona como canal alternativo mediante `mailto:`.
+- La configuración funcional usa `preview: false`; se conserva `noindex,nofollow` mientras la revisión se realiza en el hostname temporal.
+
+Las condiciones comerciales se recuperaron de `docs/primofficelandingcorporativa-original.html`, aceptado como referencia para esta etapa. El contacto y la dirección se contrastaron con el sitio oficial actual de PrimOffice. El HTML original usaba `corporativo@primoffice.com.ar`; se adoptó `info@primoffice.com.ar` porque es el correo publicado actualmente por PrimOffice y el indicado para esta ejecución.
 
 ## Evidencia visual usada
 
@@ -33,20 +35,19 @@ Las imágenes del ZIP muestran trabajos o productos con las siguientes marcas vi
 - Volkswagen
 - Banco Formosa
 
-Estas marcas se usan en la vista previa porque aparecen en la evidencia visual recibida. Para producción conviene confirmar con Martín qué logos oficiales están autorizados para publicarse y reemplazar el marquee tipográfico por archivos de logo aprobados.
+Las once fotografías están integradas en el hero, soluciones, portfolio y diferenciales. No hay archivos de logos oficiales independientes; por eso la franja de confianza mantiene una representación tipográfica monocromática preparada para ser reemplazada cuando se reciban los recursos aprobados.
 
-## Pendiente antes de producción
+## Pendiente real
 
-1. Número real de WhatsApp Business.
-2. Email corporativo definitivo.
-3. Casos de éxito reales, con texto y autorización de publicación.
-4. Archivos oficiales de logos de clientes/marcas que se quieran mostrar.
-5. Confirmación final de claims comerciales específicos si se desean agregar: cantidades mínimas, tiempos de producción, envíos, medios de pago, facturación, etc.
-6. Confirmación del subdominio definitivo (`empresas.primoffice.com.ar` es la propuesta actual).
-7. Definir si el formulario solo deriva a WhatsApp/email o si debe guardar leads en un backend/CRM.
-8. Al pasar a producción, retirar `noindex,nofollow` del `<head>` de `site/index.html`.
-9. Cambiar `preview: true` a `preview: false` en `site/assets/js/config.js`.
+1. Casos de éxito reales, con necesidad, solución, resultado y autorización de publicación.
+2. Archivos oficiales y aprobados de logos de las marcas que se quieran mostrar gráficamente.
+3. Aprobación y configuración externa del subdominio definitivo `empresas.primoffice.com.ar`.
+4. Definir una futura integración con backend o CRM si se decide almacenar leads; la implementación actual no guarda datos.
+5. Retirar `noindex,nofollow` únicamente cuando se apruebe la publicación en el dominio definitivo.
 
 ## No publicado deliberadamente
 
-El borrador original incluía testimonios de ejemplo y afirmaciones comerciales exactas. No se trasladaron a esta versión porque las notas de reunión indican que los testimonios eran inventados y porque las condiciones comerciales exactas requieren confirmación actual.
+- Testimonios, métricas y resultados del borrador original, porque no cuentan con respaldo real autorizado.
+- Casos de éxito formales derivados solo de fotografías.
+- Logos reconstruidos o descargados de Internet.
+- Nombres técnicos de productos que no estén confirmados como denominaciones comerciales vigentes.
