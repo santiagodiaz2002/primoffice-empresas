@@ -28,19 +28,31 @@
   }
 
   if (navToggle && nav) {
+    const closeNav = () => {
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Abrir menú");
+      nav.classList.remove("is-open");
+      document.body.classList.remove("nav-open");
+    };
+
     navToggle.addEventListener("click", () => {
       const open = navToggle.getAttribute("aria-expanded") === "true";
       navToggle.setAttribute("aria-expanded", String(!open));
+      navToggle.setAttribute("aria-label", open ? "Abrir menú" : "Cerrar menú");
       nav.classList.toggle("is-open", !open);
       document.body.classList.toggle("nav-open", !open);
     });
 
     nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navToggle.setAttribute("aria-expanded", "false");
-        nav.classList.remove("is-open");
-        document.body.classList.remove("nav-open");
-      });
+      link.addEventListener("click", closeNav);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeNav();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 920) closeNav();
     });
   }
 
@@ -88,8 +100,7 @@
       "",
       `Nombre: ${data.get("nombre") || ""}`,
       `Empresa: ${data.get("empresa") || ""}`,
-      `Email: ${data.get("email") || ""}`,
-      `Teléfono / WhatsApp: ${data.get("telefono") || ""}`,
+      `Contacto: ${data.get("contacto") || ""}`,
       `Fecha objetivo: ${formatDate(data.get("fecha"))}`,
       data.get("cantidad") ? `Cantidad aproximada: ${data.get("cantidad")}` : "",
       `Proyecto: ${data.get("tipo") || ""}`,
