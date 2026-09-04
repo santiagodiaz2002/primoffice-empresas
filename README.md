@@ -55,10 +55,9 @@ Mientras `preview` sea `true`, la web muestra un aviso de vista previa y el form
 ## GitHub Desktop
 
 1. Descomprimir este proyecto en la carpeta definitiva.
-2. En GitHub Desktop: **File → Add local repository**.
-3. Si todavía no existe `.git`, usar **Create a New Repository on your hard drive** apuntando a esta carpeta.
-4. Hacer el commit inicial.
-5. **Publish repository** para subirlo a GitHub.
+2. En GitHub Desktop: **File → Add local repository** y elegir la carpeta `primoffice-empresas`.
+3. El repositorio local ya incluye `.git`, branch `main` y commit inicial.
+4. Pulsar **Publish repository** para crear/subir el remoto a GitHub con el nombre `primoffice-empresas`.
 
 ## Cloudflare Pages — configuración recomendada
 
