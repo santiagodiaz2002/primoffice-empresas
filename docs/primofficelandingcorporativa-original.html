@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PrimOffice Corporativo</title>
+<meta name="description" content="Kits de onboarding, regalos de fin de año y merchandising de marca. Accesorios de escritorio PrimOffice con tu logo, diseñados y producidos en Argentina." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" />
+
+<style>
+  img { max-width: 100%; height: auto; }
+  [hidden] { display: none !important; }
+  :root {
+    --brand:      #26ADDF;
+    --brand-dark: #1B8FBE;
+    --brand-tint: #EAF7FC;
+    --ink:        #2E2E2E;
+    --ink-strong: #1A1A1A;
+    --ink-soft:   #6A6F72;
+    --ink-faint:  #9AA0A3;
+    --bg:         #FFFFFF;
+    --surface:    #F4F7F8;
+    --surface-2:  #FFFFFF;
+    --line:       #E3E8EA;
+    --line-soft:  #EEF1F2;
+    --wa:         #25D366;
+    --bad:        #C43D3D;
+    --focus:      #1B8FBE;
+
+    --maxw: 1180px;
+    --s--1: clamp(0.8rem, 0.78rem + 0.08vw, 0.85rem);
+    --s-0:  clamp(0.98rem, 0.95rem + 0.15vw, 1.05rem);
+    --s-1:  clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+    --s-2:  clamp(1.45rem, 1.25rem + 0.9vw, 1.95rem);
+    --s-3:  clamp(1.9rem, 1.55rem + 1.7vw, 2.9rem);
+    --s-4:  clamp(2.5rem, 1.9rem + 3.1vw, 4.4rem);
+
+    --sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --brand:      #3BBDE9;
+      --brand-dark: #63CCEE;
+      --brand-tint: #14262E;
+      --ink:        #DDE2E4;
+      --ink-strong: #F2F5F6;
+      --ink-soft:   #9BA2A6;
+      --ink-faint:  #6C7378;
+      --bg:         #14181A;
+      --surface:    #1A2023;
+      --surface-2:  #1E2528;
+      --line:       #2C3438;
+      --line-soft:  #232A2E;
+      --bad:        #FF7A7A;
+      --focus:      #63CCEE;
+    }
+  }
+  :root[data-theme="dark"] {
+    --brand:      #3BBDE9;
+    --brand-dark: #63CCEE;
+    --brand-tint: #14262E;
+    --ink:        #DDE2E4;
+    --ink-strong: #F2F5F6;
+    --ink-soft:   #9BA2A6;
+    --ink-faint:  #6C7378;
+    --bg:         #14181A;
+    --surface:    #1A2023;
+    --surface-2:  #1E2528;
+    --line:       #2C3438;
+    --line-soft:  #232A2E;
+    --bad:        #FF7A7A;
+    --focus:      #63CCEE;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--s-0);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--brand); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+
+  h1, h2, h3, h4 { margin: 0; color: var(--ink-strong); font-weight: 800; line-height: 1.12; letter-spacing: -0.018em; text-wrap: balance; }
+
+  .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: 22px; }
+
+  .eyebrow {
+    font-size: var(--s--1);
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin: 0 0 18px;
+  }
+  .eyebrow .idx { color: var(--ink-faint); margin-right: .7em; }
+
+  /* ---- top bar ---- */
+  .topbar {
+    background: var(--ink-strong);
+    color: #fff;
+    font-size: .78rem;
+    letter-spacing: .04em;
+    text-align: center;
+    padding: 8px 22px;
+  }
+  :root[data-theme="dark"] .topbar,
+  :root:not([data-theme="light"]) .topbar { background: #0E1113; }
+  .topbar b { font-weight: 700; }
+  .topbar .sep { opacity: .4; margin: 0 .6em; }
+  @media (max-width: 620px) { .topbar .opt { display: none; } }
+
+  /* ---- header ---- */
+  .site-head {
+    position: sticky; top: 0; z-index: 60;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 66px; }
+  .brand-logo { display: flex; align-items: center; }
+  .brand-logo img { height: 34px; width: auto; display: block; }
+  :root[data-theme="dark"] .brand-logo img,
+  :root:not([data-theme="light"]) .brand-logo img { filter: brightness(0) invert(1); }
+  .nav { display: flex; align-items: center; gap: 24px; }
+  .nav a.nav-link { font-size: var(--s--1); font-weight: 600; color: var(--ink-soft); }
+  .nav a.nav-link:hover { color: var(--ink-strong); }
+  @media (max-width: 860px) { .nav .nav-link { display: none; } }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--sans); font-weight: 700; font-size: var(--s--1);
+    padding: 11px 18px; border-radius: 4px; border: 1.5px solid transparent;
+    cursor: pointer; white-space: nowrap; -webkit-appearance: none; appearance: none;
+    transition: background .16s ease, border-color .16s ease, transform .12s ease, color .16s ease;
+  }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--ink-strong); border-color: var(--line); }
+  .btn-outline:hover { border-color: var(--brand); color: var(--brand); transform: translateY(-1px); }
+  .btn-lg { padding: 15px 26px; font-size: var(--s-0); }
+
+  .theme-toggle {
+    background: transparent; border: 1.5px solid var(--line); color: var(--ink-soft);
+    width: 36px; height: 36px; border-radius: 4px; cursor: pointer; font-size: 15px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .theme-toggle:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* ---- sections ---- */
+  .section { padding: clamp(58px, 8vw, 108px) 0; scroll-margin-top: 84px; }
+  .section.alt { background: var(--surface); }
+  .section-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 58px); }
+  .section-head h2 { font-size: var(--s-3); }
+  .section-head p { margin: 16px 0 0; color: var(--ink-soft); font-size: var(--s-1); line-height: 1.5; }
+
+  /* ---- hero ---- */
+  .hero { padding: clamp(56px, 8vw, 104px) 0 clamp(46px, 6vw, 76px); }
+  .hero-in { animation: rise .5s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .hero h1 { font-size: var(--s-4); max-width: 16ch; font-weight: 800; letter-spacing: -0.03em; }
+  .hero h1 .u { color: var(--brand); }
+  .hero .lede { margin: 26px 0 0; max-width: 47ch; font-size: var(--s-1); color: var(--ink-soft); line-height: 1.5; }
+  .hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero .fine { margin-top: 16px; font-size: var(--s--1); color: var(--ink-faint); font-weight: 600; letter-spacing: .02em; }
+
+  .specs {
+    margin-top: clamp(44px, 6vw, 70px);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    background: var(--surface-2);
+  }
+  .specs div { padding: 22px; border-left: 1px solid var(--line); }
+  .specs div:first-child { border-left: 0; }
+  .specs dt { font-size: var(--s-2); font-weight: 800; color: var(--ink-strong); letter-spacing: -0.02em; }
+  .specs dd { margin: 6px 0 0; font-size: var(--s--1); color: var(--ink-soft); line-height: 1.45; }
+  @media (max-width: 760px) {
+    .specs { grid-template-columns: 1fr 1fr; }
+    .specs div:nth-child(3) { border-left: 0; }
+    .specs div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 430px) {
+    .specs { grid-template-columns: 1fr; }
+    .specs div { border-left: 0; border-top: 1px solid var(--line); }
+    .specs div:first-child { border-top: 0; }
+  }
+
+  /* ---- pillars ---- */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 780px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 28px 24px; }
+  .section.alt .pillar { background: var(--bg); }
+  .pillar .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--brand-tint); color: var(--brand); display: grid; place-items: center; margin-bottom: 18px; }
+  .pillar .ic svg { width: 21px; height: 21px; }
+  .pillar h3 { font-size: var(--s-1); margin-bottom: 9px; }
+  .pillar p { margin: 0; color: var(--ink-soft); font-size: var(--s-0); }
+
+  /* ---- use cases ---- */
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 780px) { .cases { grid-template-columns: 1fr; } }
+  .case {
+    display: flex; flex-direction: column;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px;
+    padding: 28px 26px;
+    transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+  }
+  .section.alt .case { background: var(--bg); }
+  .case:hover { border-color: var(--brand); box-shadow: 0 10px 30px -18px color-mix(in srgb, var(--brand) 60%, transparent); transform: translateY(-2px); }
+  .case .kicker { font-size: var(--s--1); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
+  .case .kicker span { color: var(--ink-faint); margin-right: .6em; }
+  .case h3 { font-size: var(--s-2); margin: 16px 0 10px; max-width: 17ch; }
+  .case p { margin: 0 0 22px; color: var(--ink-soft); font-size: var(--s-0); }
+  .case .go {
+    margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line-soft);
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 700; font-size: var(--s--1); color: var(--brand);
+  }
+  .case .go svg { width: 15px; height: 15px; transition: transform .16s ease; }
+  .case:hover .go svg { transform: translateX(4px); }
+
+  /* ---- catalog ---- */
+  .cat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 780px) { .cat { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 460px) { .cat { grid-template-columns: 1fr; } }
+  .prod { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 22px 20px; display: flex; flex-direction: column; gap: 7px; }
+  .section.alt .prod { background: var(--bg); }
+  .prod .name { font-weight: 700; color: var(--ink-strong); font-size: var(--s-0); }
+  .prod .name b { color: var(--brand); font-weight: 800; }
+  .prod p { margin: 0; font-size: var(--s--1); color: var(--ink-soft); }
+  .prod .pers { margin-top: 6px; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .cat-note { margin-top: 20px; font-size: var(--s--1); color: var(--ink-soft); display: flex; gap: 10px; align-items: baseline; }
+  .cat-note::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--brand); flex: none; transform: translateY(2px); }
+
+  /* ---- steps ---- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+  .step { list-style: none; }
+  .step .n { font-weight: 800; font-size: var(--s-1); color: var(--brand); display: flex; align-items: center; gap: 10px; }
+  .step .n::after { content: ""; height: 1.5px; flex: 1; background: var(--line); }
+  .step h3 { font-size: var(--s-1); margin: 16px 0 8px; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: var(--s-0); }
+
+  /* ---- social proof ---- */
+  .marquee {
+    position: relative; overflow: hidden;
+    border-block: 1px solid var(--line);
+    padding: 8px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex; width: max-content;
+    animation: marquee 46s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item {
+    flex: none; display: flex; align-items: center; justify-content: center;
+    height: 66px; padding: 0 clamp(22px, 3.4vw, 44px);
+    font-weight: 700; font-size: clamp(0.85rem, 0.7rem + 0.5vw, 1.05rem);
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink-soft); white-space: nowrap;
+  }
+  .marquee-item img { max-height: 38px; width: auto; filter: grayscale(1); opacity: .75; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { -webkit-mask-image: none; mask-image: none; }
+    .marquee-track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; gap: 4px 0; }
+    .marquee-item[aria-hidden="true"] { display: none; }
+  }
+  .logos-cap { margin-top: 14px; font-size: var(--s--1); color: var(--ink-faint); }
+
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 38px; }
+  @media (max-width: 820px) { .quotes { grid-template-columns: 1fr; } }
+  .quote { border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); padding: 24px 22px; }
+  .section.alt .quote { background: var(--bg); }
+  .quote p { margin: 0 0 16px; font-size: var(--s-0); line-height: 1.55; color: var(--ink); }
+  .quote footer { font-size: var(--s--1); color: var(--ink-soft); font-weight: 600; line-height: 1.5; }
+  .quote .mk { color: var(--brand); font-size: 1.3rem; font-weight: 800; line-height: 1; }
+
+  /* ---- faq ---- */
+  .faq { max-width: 820px; border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 22px 42px 22px 0; position: relative;
+    font-weight: 700; font-size: var(--s-1); color: var(--ink-strong);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 400; color: var(--brand); }
+  .faq details[open] summary::after { content: "\2212"; }
+  .faq .a { padding: 0 42px 24px 0; color: var(--ink-soft); }
+  .faq .a p { margin: 0; }
+
+  /* ---- final / form ---- */
+  .final { background: var(--surface); border-top: 1px solid var(--line); scroll-margin-top: 92px; }
+  .final .wrap { padding: clamp(52px, 7vw, 92px) 22px; }
+  .final h2 { font-size: var(--s-3); max-width: 20ch; }
+  .final .final-intro { color: var(--ink-soft); font-size: var(--s-1); max-width: 52ch; margin: 16px 0 0; line-height: 1.5; }
+
+  .lead-form { margin-top: clamp(28px, 4vw, 40px); max-width: 780px; }
+  .lf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+  @media (max-width: 620px) { .lf-grid { grid-template-columns: 1fr; } }
+  .lf-span2 { grid-column: 1 / -1; }
+  .lf-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .lf-field label { font-size: var(--s--1); font-weight: 700; color: var(--ink-strong); }
+  .lf-field .req { color: var(--brand); }
+  .lf-field .opt { color: var(--ink-faint); font-weight: 400; }
+  .lf-field input, .lf-field select, .lf-field textarea {
+    font: inherit; font-size: var(--s-0); color: var(--ink);
+    background: var(--surface-2); border: 1.5px solid var(--line); border-radius: 6px;
+    padding: 11px 13px; width: 100%; transition: border-color .15s ease;
+  }
+  .lf-field input[type="date"] { color-scheme: light; }
+  :root[data-theme="dark"] .lf-field input[type="date"],
+  :root:not([data-theme="light"]) .lf-field input[type="date"] { color-scheme: dark; }
+  .lf-field textarea { resize: vertical; min-height: 82px; }
+  .lf-field input:focus, .lf-field select:focus, .lf-field textarea:focus { outline: none; border-color: var(--brand); }
+  .lf-field input.is-invalid, .lf-field select.is-invalid { border-color: var(--bad); }
+  .lf-hint { margin: 1px 0 0; font-size: var(--s--1); color: var(--ink-faint); line-height: 1.4; }
+  .lf-actions { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .lf-note { margin: 0; font-size: var(--s--1); color: var(--ink-faint); }
+  .lf-error { margin: 14px 0 0; font-size: var(--s--1); font-weight: 700; color: var(--bad); }
+  .lf-direct { margin-top: 22px; font-size: var(--s--1); color: var(--ink-soft); max-width: 60ch; line-height: 1.6; }
+  .lf-direct a { color: var(--brand); font-weight: 700; }
+  .lf-direct a:hover { color: var(--brand-dark); }
+
+  /* ---- footer ---- */
+  .site-foot { background: var(--ink-strong); color: #cfd4d6; font-size: var(--s--1); }
+  :root[data-theme="dark"] .site-foot,
+  :root:not([data-theme="light"]) .site-foot { background: #0E1113; }
+  .site-foot .wrap { padding: 44px 22px; display: flex; flex-wrap: wrap; gap: 28px 52px; justify-content: space-between; }
+  .site-foot .fbrand { font-weight: 800; font-size: 1.1rem; color: #fff; letter-spacing: -0.02em; }
+  .site-foot .fbrand span { display: block; font-size: .62rem; font-weight: 700; letter-spacing: .3em; color: var(--brand); margin-top: 4px; }
+  .site-foot h4 { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: #8b9295; margin: 0 0 10px; font-weight: 700; }
+  .site-foot a, .site-foot p { display: block; color: #cfd4d6; margin: 5px 0; }
+  .site-foot a:hover { color: #fff; }
+  .site-foot .legal { width: 100%; border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; color: #8b9295; font-size: .72rem; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>PrimOffice · Línea corporativa</b>
+  <span class="sep">|</span> Cotización con mockups de tu marca en 48 h
+  <span class="opt"><span class="sep">|</span> Envíos a todo el país</span>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand-logo" href="#top" aria-label="PrimOffice — inicio">
+      <img alt="PrimOffice" src="data:image/webp;base64,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" />
+    </a>
+    <nav class="nav" aria-label="Secciones">
+      <a class="nav-link" href="#casos">Casos</a>
+      <a class="nav-link" href="#catalogo">Catálogo</a>
+      <a class="nav-link" href="#proceso">Proceso</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">◑</button>
+      <a class="btn btn-primary" href="#contacto">
+        Pedir cotización
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-in">
+      <p class="eyebrow">Onboarding · Fin de año · Merchandising · Eventos</p>
+      <h1>Merch que tu equipo <span class="u">sí</span> usa todos los días.</h1>
+      <p class="lede">Ponemos la línea de accesorios de escritorio de PrimOffice a trabajar para tu marca: kits de bienvenida, regalos de fin de año y merchandising con tu logo. Diseño propio, grabado y logística, todo en Argentina.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#contacto">Pedir cotización</a>
+        <a class="btn btn-outline btn-lg" href="#catalogo">Ver catálogo corporativo</a>
+      </div>
+      <p class="fine">Respondemos el mismo día hábil · Propuesta con mockups y precio en 48 h</p>
+
+      <dl class="specs">
+        <div><dt>Producto propio</dt><dd>Diseñamos y fabricamos nuestra línea, no revendemos catálogo</dd></div>
+        <div><dt>Desde 25 u.</dt><dd>Mínimo por producto · Kits armados desde 15</dd></div>
+        <div><dt>48 h</dt><dd>Cotización con mockups de tu marca aplicada</dd></div>
+        <div><dt>Showroom</dt><dd>Aguirre 407, Villa Crespo, CABA · con cita previa</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section alt" id="partner">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">01</span>Por qué PrimOffice</p>
+        <h2>Un partner de gifting global, con marca propia atrás.</h2>
+        <p>La mayoría de los proveedores de merch revenden lo mismo que todos y compiten por precio. Nosotros diseñamos y fabricamos nuestra propia línea de accesorios de escritorio, y ponemos esa capacidad al servicio de tu marca: de la muestra a la última caja despachada.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3 8 6-16 3 8h4"/></svg></span>
+          <h3>Producto que se elige, no que se guarda</h3>
+          <p>Soportes de aluminio, MagSafe, mats y organizadores que ya se venden en retail. Objetos con valor real, no souvenirs.</p>
+        </div>
+        <div class="pillar">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>Tu marca, bien puesta</h3>
+          <p>Grabado láser sobre aluminio, packaging a medida, tarjetas y cintas. Branding que se siente premium, no estampado.</p>
+        </div>
+        <div class="pillar">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+          <h3>Kitting y entrega, resueltos</h3>
+          <p>Armamos cada kit unidad por unidad y despachamos a una oficina o a la casa de cada persona, en la fecha que necesitás.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="casos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">02</span>Casos de uso</p>
+        <h2>Para qué te va a servir.</h2>
+        <p>Elegí el caso que se parece a lo que estás armando: te lleva al formulario con esa opción ya seleccionada.</p>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <span class="kicker"><span>KIT</span>Onboarding</span>
+          <h3>Que el primer día se sienta premium</h3>
+          <p>Sets de bienvenida para nuevos ingresos: soporte para notebook, organizador y accesorios con branding sutil, en una caja con su nombre y una tarjeta del equipo.</p>
+          <a class="go" data-tipo="Kits de onboarding" href="#contacto">
+            Armar kit de onboarding
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </article>
+        <article class="case">
+          <span class="kicker"><span>GIFT</span>Fin de año</span>
+          <h3>Un regalo que no termina en un cajón</h3>
+          <p>Cajas de fin de año con curaduría de productos PrimOffice y packaging personalizado. Para todo el equipo o para tus clientes clave.</p>
+          <a class="go" data-tipo="Regalos de fin de año" href="#contacto">
+            Cotizar regalos de fin de año
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </article>
+        <article class="case">
+          <span class="kicker"><span>BRAND</span>Merchandising</span>
+          <h3>Tu logo en objetos que se usan</h3>
+          <p>Producción a escala para equipos comerciales, programas de referidos y regalos a clientes. Merch que la gente quiere tener en el escritorio.</p>
+          <a class="go" data-tipo="Merchandising de marca" href="#contacto">
+            Pedir merchandising de marca
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </article>
+        <article class="case">
+          <span class="kicker"><span>EVENT</span>Eventos</span>
+          <h3>Stock listo para tu próximo evento</h3>
+          <p>Kits para speakers, gift bags para asistentes y premios para dinámicas. Con la cantidad y la fecha del evento como punto de partida.</p>
+          <a class="go" data-tipo="Kits para eventos" href="#contacto">
+            Preparar kits para evento
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">03</span>Catálogo corporativo</p>
+        <h2>Los productos que entran en cada kit.</h2>
+        <p>Nuestra línea de escritorio, disponible para personalizar y producir por volumen. Se combinan entre sí para armar kits de distinto ticket.</p>
+      </div>
+      <div class="cat">
+        <article class="prod">
+          <span class="name">Soporte para notebook <b>pTilt</b></span>
+          <p>Aluminio, plegable y regulable en altura. El producto estrella de todo kit de onboarding.</p>
+          <span class="pers">Grabado láser</span>
+        </article>
+        <article class="prod">
+          <span class="name">Soporte para celular <b>pPh</b></span>
+          <p>Base de escritorio con ángulo ajustable. Compacto para cajas de menor ticket.</p>
+          <span class="pers">Grabado láser</span>
+        </article>
+        <article class="prod">
+          <span class="name">Cargador MagSafe <b>pCase</b></span>
+          <p>Carga teléfono, reloj y auriculares. El upgrade para kits premium y regalos a clientes.</p>
+          <span class="pers">Packaging a medida</span>
+        </article>
+        <article class="prod">
+          <span class="name">Mat de escritorio <b>pMat</b></span>
+          <p>Cuero ecológico, superficie completa de trabajo. Área grande y visible para tu marca.</p>
+          <span class="pers">Hot stamping / color a medida</span>
+        </article>
+        <article class="prod">
+          <span class="name">Tarjetero <b>pWallet</b></span>
+          <p>Tarjetero MagSafe que se adhiere al teléfono. Detalle de bajo costo con alta rotación.</p>
+          <span class="pers">Grabado / hot stamping</span>
+        </article>
+        <article class="prod">
+          <span class="name">Caja + kitting + tarjeta</span>
+          <p>Packaging rígido, relleno, tarjeta impresa y armado unidad por unidad con diseño incluido.</p>
+          <span class="pers">Diseño a medida</span>
+        </article>
+      </div>
+      <p class="cat-note">Toda la línea se personaliza con grabado láser sobre aluminio, hot stamping en cuero e impresión en packaging y tarjetas. Sin mínimos de color.</p>
+    </div>
+  </section>
+
+  <section class="section" id="proceso">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">04</span>Cómo funciona</p>
+        <h2>De la idea a las cajas en la puerta.</h2>
+        <p>Un proceso de cuatro pasos, con una persona de PrimOffice a cargo de tu proyecto de punta a punta.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="n">01</span>
+          <h3>Contanos el proyecto</h3>
+          <p>Cantidad, fecha de entrega, presupuesto por persona y a quién va dirigido. Por WhatsApp alcanza.</p>
+        </li>
+        <li class="step">
+          <span class="n">02</span>
+          <h3>Propuesta y muestras</h3>
+          <p>Armamos la selección, mockups de tu branding y la cotización en 48 h. Pedís muestra física si querés.</p>
+        </li>
+        <li class="step">
+          <span class="n">03</span>
+          <h3>Producción con tu marca</h3>
+          <p>Grabado láser, packaging, tarjetas y kitting unidad por unidad. Te mandamos fotos del avance.</p>
+        </li>
+        <li class="step">
+          <span class="n">04</span>
+          <h3>Entrega en fecha</h3>
+          <p>Despacho a una dirección o envío individual a la casa de cada colaborador, con seguimiento.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section alt" id="clientes">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">05</span>Confían en la línea corporativa</p>
+        <h2>Equipos que ya regalan PrimOffice.</h2>
+      </div>
+      <div class="marquee" role="list" aria-label="Empresas que usan productos PrimOffice">
+        <div class="marquee-track">
+          <span class="marquee-item" role="listitem">Volkswagen</span>
+          <span class="marquee-item" role="listitem">Integra</span>
+          <span class="marquee-item" role="listitem">Toyota</span>
+          <span class="marquee-item" role="listitem">Zurich</span>
+          <span class="marquee-item" role="listitem">Banco Santander</span>
+          <span class="marquee-item" role="listitem">Global Events</span>
+          <span class="marquee-item" role="listitem">Mastercard</span>
+          <span class="marquee-item" role="listitem">ArcelorMittal</span>
+          <span class="marquee-item" role="listitem">Lograr</span>
+          <span class="marquee-item" role="listitem">Banco de Formosa</span>
+          <span class="marquee-item" role="listitem">UCC &middot; Univ. Cat&oacute;lica de C&oacute;rdoba</span>
+          <span class="marquee-item" role="listitem">Corven</span>
+          <span class="marquee-item" aria-hidden="true">Volkswagen</span>
+          <span class="marquee-item" aria-hidden="true">Integra</span>
+          <span class="marquee-item" aria-hidden="true">Toyota</span>
+          <span class="marquee-item" aria-hidden="true">Zurich</span>
+          <span class="marquee-item" aria-hidden="true">Banco Santander</span>
+          <span class="marquee-item" aria-hidden="true">Global Events</span>
+          <span class="marquee-item" aria-hidden="true">Mastercard</span>
+          <span class="marquee-item" aria-hidden="true">ArcelorMittal</span>
+          <span class="marquee-item" aria-hidden="true">Lograr</span>
+          <span class="marquee-item" aria-hidden="true">Banco de Formosa</span>
+          <span class="marquee-item" aria-hidden="true">UCC &middot; Univ. Cat&oacute;lica de C&oacute;rdoba</span>
+          <span class="marquee-item" aria-hidden="true">Corven</span>
+        </div>
+      </div>
+      <p class="logos-cap">Empresas que ya regalan o usan productos PrimOffice. <!-- Reemplazar cada nombre por el logo real: <span class="marquee-item"><img src="data:image/svg+xml;base64,…" alt="Marca"></span> --></p>
+
+      <div class="quotes">
+        <!-- Reemplazar por testimonios reales, con nombre y empresa, autorizados por el cliente. -->
+        <figure class="quote">
+          <span class="mk">&ldquo;</span>
+          <p>Lo usamos para el kit de bienvenida y es lo primero que la gente muestra en la foto del primer día. Se nota que es producto de verdad, no un souvenir.</p>
+          <footer>Responsable de People &amp; Culture<br>Scale&#8209;up de software · 180 personas</footer>
+        </figure>
+        <figure class="quote">
+          <span class="mk">&ldquo;</span>
+          <p>Cerramos los regalos de fin de año para 400 personas con envío casa por casa. PrimOffice se encargó de todo el kitting y la logística.</p>
+          <footer>Gerenta de Marketing<br>Empresa de servicios financieros</footer>
+        </figure>
+        <figure class="quote">
+          <span class="mk">&ldquo;</span>
+          <p>Pedimos muestra, aprobamos el grabado y en dos semanas teníamos las cajas. El seguimiento por WhatsApp hizo toda la diferencia.</p>
+          <footer>Office Manager<br>Estudio de arquitectura · Buenos Aires</footer>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span class="idx">06</span>Preguntas frecuentes</p>
+        <h2>Lo que casi siempre nos preguntan.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>¿Cuál es la cantidad mínima?</summary>
+          <div class="a"><p>Desde 25 unidades para la mayoría de los productos de la línea. Para kits armados con packaging, desde 15. Si tenés un número menor, escribinos igual y lo vemos.</p></div>
+        </details>
+        <details>
+          <summary>¿Cuánto demora la producción?</summary>
+          <div class="a"><p>Entre 10 y 20 días hábiles según la personalización y la cantidad, contados desde la aprobación del arte. Para regalos de fin de año recomendamos cerrar el proyecto antes de octubre.</p></div>
+        </details>
+        <details>
+          <summary>¿Qué tipo de personalización hacen?</summary>
+          <div class="a"><p>Grabado láser sobre aluminio, hot stamping en cuero, impresión en packaging, tarjetas y cintas, y color a medida en mats. Sin mínimos de color. En la propuesta te mandamos mockups con tu marca aplicada.</p></div>
+        </details>
+        <details>
+          <summary>¿Envían a todo el país?</summary>
+          <div class="a"><p>Sí. Despachamos a una sola dirección o hacemos envío individualizado a la casa de cada colaborador para equipos en home office, con número de seguimiento por envío.</p></div>
+        </details>
+        <details>
+          <summary>¿Emiten factura A? ¿Trabajan con orden de compra?</summary>
+          <div class="a"><p>Facturamos A y B, y trabajamos con órdenes de compra y los plazos de pago habituales de tu empresa. Somos proveedor registrable.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="final" id="contacto">
+  <div class="wrap">
+    <p class="eyebrow">Empecemos</p>
+    <h2>Contanos qué estás armando.</h2>
+    <p class="final-intro">Completá estos datos y seguimos por WhatsApp con todo cargado. Te devolvemos una propuesta con mockups de tu marca y precio en 48 h.</p>
+
+    <form class="lead-form" id="leadForm" novalidate>
+      <div class="lf-grid">
+        <div class="lf-field lf-span2">
+          <label for="lf-nombre">Nombre y empresa <span class="req">*</span></label>
+          <input id="lf-nombre" name="nombre" type="text" required autocomplete="organization" placeholder="Ej: Ana Pérez — Acme S.A." />
+        </div>
+        <div class="lf-field">
+          <label for="lf-tel">Teléfono / WhatsApp <span class="req">*</span></label>
+          <input id="lf-tel" name="tel" type="tel" required autocomplete="tel" placeholder="+54 9 11 5555 5555" />
+        </div>
+        <div class="lf-field">
+          <label for="lf-email">Email <span class="opt">(opcional)</span></label>
+          <input id="lf-email" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" />
+        </div>
+        <div class="lf-field">
+          <label for="lf-fecha">¿Para qué fecha lo necesitás? <span class="req">*</span></label>
+          <input id="lf-fecha" name="fecha" type="date" required />
+        </div>
+        <div class="lf-field">
+          <label for="lf-cantidad">Cantidad aproximada <span class="req">*</span></label>
+          <select id="lf-cantidad" name="cantidad" required>
+            <option value="" disabled selected>Elegí un rango</option>
+            <option>Menos de 25</option>
+            <option>25 a 50</option>
+            <option>50 a 150</option>
+            <option>150 a 500</option>
+            <option>Más de 500</option>
+          </select>
+        </div>
+        <div class="lf-field lf-span2">
+          <label for="lf-tipo">¿Qué estás armando? <span class="req">*</span></label>
+          <select id="lf-tipo" name="tipo" required>
+            <option value="" disabled selected>Elegí una opción</option>
+            <option>Kits de onboarding</option>
+            <option>Regalos de fin de año</option>
+            <option>Merchandising de marca</option>
+            <option>Kits para eventos</option>
+            <option>Todavía no lo tengo definido</option>
+          </select>
+        </div>
+        <div class="lf-field lf-span2">
+          <label for="lf-logo">Link a tu logo o manual de marca <span class="opt">(opcional)</span></label>
+          <input id="lf-logo" name="logo" type="url" inputmode="url" placeholder="https://..." />
+          <p class="lf-hint">Si no tenés un link a mano, podés adjuntar el archivo directamente en el chat de WhatsApp.</p>
+        </div>
+        <div class="lf-field lf-span2">
+          <label for="lf-msg">Contanos un poco más <span class="opt">(opcional)</span></label>
+          <textarea id="lf-msg" name="msg" rows="3" placeholder="Presupuesto por persona, si va a una oficina o casa por casa, ideas que ya tengas…"></textarea>
+        </div>
+      </div>
+
+      <div class="lf-actions">
+        <button type="submit" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.34 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.004c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm0 18.02h-.003a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.05 8.05 0 0 1-1.24-4.3c0-4.55 3.7-8.25 8.25-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.7 8.25-8.25 8.25Zm4.52-6.18c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42l-.48-.01c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg>
+          Enviar y seguir por WhatsApp
+        </button>
+        <p class="lf-note">Al enviar se abre WhatsApp con tus datos ya cargados. Este sitio no guarda tu información.</p>
+      </div>
+      <p class="lf-error" id="lfError" hidden>Completá los campos marcados con <span class="req">*</span> para continuar.</p>
+    </form>
+
+    <p class="lf-direct">¿Preferís sin formulario? <a data-wa="Hola PrimOffice, quiero consultar por la línea corporativa." href="https://wa.me/">Escribinos directo por WhatsApp</a> o a <a href="mailto:corporativo@primoffice.com.ar">corporativo@primoffice.com.ar</a>.</p>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="col">
+      <p class="fbrand">PrimOffice<span>ELEVATE YOUR WORK</span></p>
+    </div>
+    <div class="col">
+      <h4>Corporativo</h4>
+      <a href="#casos">Casos de uso</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#faq">Preguntas frecuentes</a>
+    </div>
+    <div class="col">
+      <h4>Tienda</h4>
+      <a href="https://primoffice.com.ar" target="_blank" rel="noopener">primoffice.com.ar</a>
+      <a href="https://instagram.com/primoffice" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://primoffice.com.ar" target="_blank" rel="noopener">Blog</a>
+    </div>
+    <div class="col">
+      <h4>Showroom</h4>
+      <p>Aguirre 407, Villa Crespo</p>
+      <p>CABA · con cita previa</p>
+      <a href="mailto:corporativo@primoffice.com.ar">corporativo@primoffice.com.ar</a>
+    </div>
+    <p class="legal">PrimOffice · Accesorios ergonómicos y de productividad para el espacio de trabajo · Buenos Aires, Argentina. Reemplazar por razón social y CUIT.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // === CONFIG: reemplazar por el número real de WhatsApp Business (formato internacional, sin + ni espacios) ===
+    var WA_NUMBER = "5491100000000";
+
+    var links = document.querySelectorAll("[data-wa]");
+    for (var i = 0; i < links.length; i++) {
+      var msg = links[i].getAttribute("data-wa") || "";
+      links[i].setAttribute("href", "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg));
+      links[i].setAttribute("target", "_blank");
+      links[i].setAttribute("rel", "noopener");
+    }
+
+    // Case cards preselect the "¿Qué estás armando?" field
+    var tipoSel = document.getElementById("lf-tipo");
+    var tipoLinks = document.querySelectorAll("[data-tipo]");
+    for (var t = 0; t < tipoLinks.length; t++) {
+      tipoLinks[t].addEventListener("click", function () {
+        if (!tipoSel) return;
+        tipoSel.value = this.getAttribute("data-tipo");
+        tipoSel.classList.remove("is-invalid");
+      });
+    }
+
+    // Lead form -> open WhatsApp with everything prefilled
+    var form = document.getElementById("leadForm");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var req = ["nombre", "tel", "fecha", "cantidad", "tipo"];
+        var ok = true;
+        for (var r = 0; r < req.length; r++) {
+          var el = form.elements[req[r]];
+          var empty = !String(el.value || "").trim();
+          el.classList.toggle("is-invalid", empty);
+          if (empty) ok = false;
+        }
+        var errEl = document.getElementById("lfError");
+        errEl.hidden = ok;
+        if (!ok) {
+          var firstBad = form.querySelector(".is-invalid");
+          if (firstBad) firstBad.focus();
+          return;
+        }
+        var g = form.elements;
+        var fecha = g.fecha.value ? g.fecha.value.split("-").reverse().join("/") : "";
+        var parts = [
+          "Hola PrimOffice, quiero una cotización para la línea corporativa.",
+          "",
+          "Nombre y empresa: " + g.nombre.value.trim(),
+          "Teléfono: " + g.tel.value.trim(),
+          g.email.value.trim() ? "Email: " + g.email.value.trim() : "",
+          "Fecha que lo necesito: " + fecha,
+          "Cantidad: " + g.cantidad.value,
+          "Qué estamos armando: " + g.tipo.value,
+          g.logo.value.trim() ? "Logo / manual de marca: " + g.logo.value.trim() : "",
+          g.msg.value.trim() ? "Detalle: " + g.msg.value.trim() : ""
+        ].filter(Boolean);
+        var waUrl = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(parts.join("\n"));
+        window.open(waUrl, "_blank", "noopener");
+      });
+      form.addEventListener("input", function (e) {
+        if (e.target && e.target.classList) e.target.classList.remove("is-invalid");
+      });
+    }
+
+    var root = document.documentElement;
+    var btn = document.getElementById("themeToggle");
+    var stored = null;
+    try { stored = localStorage.getItem("po-theme"); } catch (e) {}
+    if (stored === "light" || stored === "dark") root.setAttribute("data-theme", stored);
+
+    btn.addEventListener("click", function () {
+      var cur = root.getAttribute("data-theme");
+      if (!cur) cur = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("po-theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
