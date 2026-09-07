@@ -356,7 +356,7 @@ textarea {
 
 .hero-image-main {
   top: 0;
-  right: 8%;
+  right: 0;
   bottom: 0;
   left: 0;
 }
@@ -392,16 +392,6 @@ textarea {
   font-weight: 600;
   line-height: 1.35;
   text-align: left;
-}
-
-.hero-image-detail {
-  z-index: 3;
-  top: 62px;
-  right: 0;
-  width: 31%;
-  height: 43%;
-  border: 10px solid var(--white);
-  box-shadow: 0 24px 50px rgba(8, 23, 30, 0.22);
 }
 
 .hero-marker {
@@ -517,7 +507,7 @@ textarea {
 .solutions-list a {
   min-height: 138px;
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 24px;
+  grid-template-columns: 42px minmax(0, 1fr);
   align-items: start;
   gap: 24px;
   padding: 28px 2px;
@@ -553,11 +543,6 @@ textarea {
   line-height: 1.65;
 }
 
-.solutions-list b {
-  padding-top: 2px;
-  font-size: 1.12rem;
-}
-
 .solutions-media {
   position: sticky;
   top: calc(var(--header-height) + 32px);
@@ -580,9 +565,13 @@ textarea {
   inset: 0 0 90px 0;
 }
 
+.solutions-photo-lograr img {
+  object-position: right bottom;
+}
+
 .solutions-photo-secondary {
   right: -28px;
-  bottom: 18px;
+  top: 54px;
   width: 43%;
   aspect-ratio: 4 / 5;
   border: 9px solid var(--white);
@@ -700,6 +689,27 @@ textarea {
 .work-item-landscape {
   grid-column: 9 / 13;
   grid-row: 5 / 9;
+}
+
+.work-item-corven::after {
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 13, 17, 0.72), rgba(5, 13, 17, 0.3) 36%, transparent 68%);
+}
+
+.work-item-corven img {
+  object-position: center bottom;
+}
+
+.work-item-corven figcaption {
+  right: auto;
+  width: 46%;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.work-item-corven figcaption span {
+  text-align: left;
 }
 
 .work-strip {
@@ -828,24 +838,14 @@ textarea {
 }
 
 .reasons-intro > h2 {
-  max-width: 11ch;
+  max-width: 10ch;
+  font-size: clamp(2.75rem, 4vw, 4.1rem);
 }
 
 .reasons-intro > p:not(.eyebrow) {
   max-width: 48ch;
   margin: 25px 0 0;
   color: rgba(255, 255, 255, 0.64);
-}
-
-.reasons-intro figure {
-  height: 270px;
-  margin: 50px 0 0;
-  overflow: hidden;
-}
-
-.reasons-intro figure img {
-  height: 100%;
-  object-fit: cover;
 }
 
 .reasons-list {
@@ -857,7 +857,7 @@ textarea {
 }
 
 .reasons-list div {
-  min-height: 210px;
+  min-height: 190px;
   padding: 31px 30px 30px 0;
   border-bottom: 1px solid var(--line-dark);
 }
@@ -1498,10 +1498,6 @@ textarea {
     min-height: 470px;
   }
 
-  .hero-image-main {
-    right: 4%;
-  }
-
   .hero-image-main figcaption {
     right: 18px;
     bottom: 18px;
@@ -1510,13 +1506,6 @@ textarea {
 
   .hero-image-main figcaption span {
     display: block;
-  }
-
-  .hero-image-detail {
-    top: 30px;
-    width: 34%;
-    height: 38%;
-    border-width: 7px;
   }
 
   .hero-marker {
@@ -1564,7 +1553,7 @@ textarea {
 
   .solutions-list a {
     min-height: 0;
-    grid-template-columns: 32px minmax(0, 1fr) 17px;
+    grid-template-columns: 32px minmax(0, 1fr);
     gap: 12px;
     padding: 23px 0;
   }
@@ -1593,7 +1582,7 @@ textarea {
 
   .solutions-photo-secondary {
     right: -7px;
-    bottom: 27px;
+    top: 48px;
     width: 42%;
     border-width: 7px;
   }
@@ -1686,11 +1675,6 @@ textarea {
 
   .reasons-grid {
     gap: 60px;
-  }
-
-  .reasons-intro figure {
-    height: 220px;
-    margin-top: 38px;
   }
 
   .reasons-list {
