@@ -917,7 +917,7 @@ textarea {
 .brand-marquee-track {
   width: max-content;
   display: flex;
-  animation: brand-loop 45s linear infinite;
+  animation: brand-loop 52s linear infinite;
 }
 
 .brand-marquee-group {
@@ -925,23 +925,18 @@ textarea {
   display: flex;
   align-items: center;
   gap: 0;
-  padding-right: 62px;
+  padding-right: 28px;
 }
 
-.brand-marquee-group span {
+.brand-logo {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 112px;
-  padding: 0 38px;
-  color: #53636a;
-  font-size: clamp(1.1rem, 1.8vw, 1.55rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  white-space: nowrap;
+  min-height: 116px;
+  padding: 0 18px;
 }
 
-.brand-marquee-group span::after {
+.brand-logo::after {
   position: absolute;
   right: 0;
   width: 5px;
@@ -949,6 +944,49 @@ textarea {
   background: var(--brand);
   border-radius: 50%;
   content: "";
+}
+
+.brand-logo-frame {
+  width: 194px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d5dfe2;
+  border-radius: 2px;
+}
+
+.brand-logo--compact .brand-logo-frame {
+  width: 132px;
+}
+
+.brand-logo--wide .brand-logo-frame {
+  width: 226px;
+}
+
+.brand-logo-frame img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.brand-logo--inverse .brand-logo-frame {
+  background: var(--night-soft);
+  border-color: var(--night-soft);
+}
+
+.brand-logo--volkswagen .brand-logo-frame img {
+  max-height: 46px;
+}
+
+.brand-logo--arcelormittal .brand-logo-frame img,
+.brand-logo--ucc .brand-logo-frame img,
+.brand-logo--integra .brand-logo-frame img {
+  max-height: 48px;
 }
 
 @keyframes brand-loop {
@@ -1703,10 +1741,34 @@ textarea {
     padding-right: 38px;
   }
 
-  .brand-marquee-group span {
-    min-height: 90px;
-    padding: 0 24px;
-    font-size: 1.08rem;
+  .brand-logo {
+    min-height: 92px;
+    padding: 0 12px;
+  }
+
+  .brand-logo-frame {
+    width: 170px;
+    height: 56px;
+    padding: 10px 12px;
+  }
+
+  .brand-logo--compact .brand-logo-frame {
+    width: 112px;
+  }
+
+  .brand-logo--wide .brand-logo-frame {
+    width: 196px;
+  }
+
+  .brand-logo-frame img {
+    max-height: 36px;
+  }
+
+  .brand-logo--volkswagen .brand-logo-frame img,
+  .brand-logo--arcelormittal .brand-logo-frame img,
+  .brand-logo--ucc .brand-logo-frame img,
+  .brand-logo--integra .brand-logo-frame img {
+    max-height: 40px;
   }
 
   .faq-grid {
@@ -1793,7 +1855,8 @@ textarea {
     display: none;
   }
 
-  .brand-marquee-group span {
-    min-height: 54px;
+  .brand-logo {
+    min-height: 80px;
+    padding: 7px;
   }
 }

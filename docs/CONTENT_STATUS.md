@@ -35,12 +35,12 @@ Las imágenes del ZIP muestran trabajos o productos con las siguientes marcas vi
 - Volkswagen
 - Banco Formosa
 
-Las once fotografías están integradas en el hero, soluciones, portfolio y diferenciales. No hay archivos de logos oficiales independientes; por eso la franja de confianza mantiene una representación tipográfica monocromática preparada para ser reemplazada cuando se reciban los recursos aprobados.
+Las once fotografías están integradas en el hero, soluciones, portfolio y diferenciales. La franja de confianza usa assets reales de Mastercard, Santander, Globant, Zurich, Banco Formosa, Volkswagen, ArcelorMittal, UCC, Lograr, Grupo Corven e Íntegra. Cada identidad se comparó con la fotografía correspondiente y se documentó en `docs/CLIENT_LOGOS_SOURCES.md`; la presencia en trabajos no implica partnership ni autorización comercial explícita.
 
 ## Pendiente real
 
 1. Casos de éxito reales, con necesidad, solución, resultado y autorización de publicación.
-2. Archivos oficiales y aprobados de logos de las marcas que se quieran mostrar gráficamente.
+2. Confirmación final de Martín sobre la autorización para publicar los logos/clientes en producción.
 3. Aprobación y configuración externa del subdominio definitivo `empresas.primoffice.com.ar`.
 4. Definir una futura integración con backend o CRM si se decide almacenar leads; la implementación actual no guarda datos.
 5. Retirar `noindex,nofollow` únicamente cuando se apruebe la publicación en el dominio definitivo.
@@ -49,5 +49,5 @@ Las once fotografías están integradas en el hero, soluciones, portfolio y dife
 
 - Testimonios, métricas y resultados del borrador original, porque no cuentan con respaldo real autorizado.
 - Casos de éxito formales derivados solo de fotografías.
-- Logos reconstruidos o descargados de Internet.
+- Logos reconstruidos, filtrados o variantes que no coinciden con la evidencia visual.
 - Nombres técnicos de productos que no estén confirmados como denominaciones comerciales vigentes.
