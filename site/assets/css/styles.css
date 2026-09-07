@@ -925,15 +925,15 @@ textarea {
   display: flex;
   align-items: center;
   gap: 0;
-  padding-right: 28px;
+  padding-right: 24px;
 }
 
 .brand-logo {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 116px;
-  padding: 0 18px;
+  min-height: 104px;
+  padding: 0 24px;
 }
 
 .brand-logo::after {
@@ -947,46 +947,37 @@ textarea {
 }
 
 .brand-logo-frame {
-  width: 194px;
-  height: 64px;
+  width: 168px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 14px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid #d5dfe2;
-  border-radius: 2px;
 }
 
 .brand-logo--compact .brand-logo-frame {
-  width: 132px;
+  width: 108px;
 }
 
 .brand-logo--wide .brand-logo-frame {
-  width: 226px;
+  width: 210px;
 }
 
 .brand-logo-frame img {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: 40px;
+  max-height: 42px;
   object-fit: contain;
 }
 
-.brand-logo--inverse .brand-logo-frame {
-  background: var(--night-soft);
-  border-color: var(--night-soft);
-}
-
 .brand-logo--volkswagen .brand-logo-frame img {
-  max-height: 46px;
+  max-height: 48px;
 }
 
 .brand-logo--arcelormittal .brand-logo-frame img,
 .brand-logo--ucc .brand-logo-frame img,
 .brand-logo--integra .brand-logo-frame img {
-  max-height: 48px;
+  max-height: 46px;
 }
 
 @keyframes brand-loop {
@@ -1738,26 +1729,25 @@ textarea {
   }
 
   .brand-marquee-group {
-    padding-right: 38px;
+    padding-right: 24px;
   }
 
   .brand-logo {
-    min-height: 92px;
-    padding: 0 12px;
+    min-height: 84px;
+    padding: 0 18px;
   }
 
   .brand-logo-frame {
-    width: 170px;
-    height: 56px;
-    padding: 10px 12px;
+    width: 148px;
+    height: 48px;
   }
 
   .brand-logo--compact .brand-logo-frame {
-    width: 112px;
+    width: 92px;
   }
 
   .brand-logo--wide .brand-logo-frame {
-    width: 196px;
+    width: 184px;
   }
 
   .brand-logo-frame img {
@@ -1768,7 +1758,7 @@ textarea {
   .brand-logo--arcelormittal .brand-logo-frame img,
   .brand-logo--ucc .brand-logo-frame img,
   .brand-logo--integra .brand-logo-frame img {
-    max-height: 40px;
+    max-height: 38px;
   }
 
   .faq-grid {
