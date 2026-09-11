@@ -125,9 +125,30 @@
   if (form) {
     if ((whatsappNumber || corporateEmail) && formNote) {
       formNote.textContent = whatsappNumber
-        ? "Al enviar, abrimos WhatsApp con los datos de tu consulta ya cargados. Este sitio no guarda tu información."
-        : "Al enviar, preparamos un email con los datos de tu consulta.";
+        ? "Al enviar, registramos los datos de tu consulta para poder gestionarla y abrimos WhatsApp con el mensaje preparado."
+        : "Al enviar, registramos los datos de tu consulta para poder gestionarla y preparamos un email con el mensaje.";
     }
+
+    let registrationPending = false;
+    const registerInquiry = async (data) => {
+      if (registrationPending) return;
+      registrationPending = true;
+      try {
+        const response = await fetch("https://setupoficina.com.ar/api/corporate-leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(Object.fromEntries(data)),
+          keepalive: true
+        });
+        if (!response.ok) throw new Error("No se pudo registrar la consulta.");
+      } catch (_) {
+        formStatus.textContent = whatsappNumber
+          ? "No pudimos registrar la consulta. Podés continuar por WhatsApp con el mensaje preparado."
+          : "No pudimos registrar la consulta. Podés continuar por email.";
+      } finally {
+        registrationPending = false;
+      }
+    };
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -140,6 +161,9 @@
 
       const data = new FormData(form);
       const message = buildMessage(data);
+
+      // Iniciar el registro sin esperar la red: WhatsApp conserva la activación del clic.
+      void registerInquiry(data);
 
       if (whatsappNumber) {
         window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");

@@ -17,7 +17,7 @@ Landing B2B para un subdominio de PrimOffice, orientada a:
 
 ```text
 primoffice-empresas/
-├─ site/                         # directorio que se publica en Cloudflare Pages
+├─ site/                         # assets estáticos del Worker de Cloudflare
 │  ├─ index.html
 │  ├─ _headers
 │  └─ assets/
@@ -36,7 +36,7 @@ primoffice-empresas/
 
 ## Vista local
 
-No hay build ni dependencias. Se puede abrir `site/index.html` directamente o servir la carpeta `site/` con cualquier servidor estático.
+La landing no necesita build. Para servirla con la misma plataforma de producción: `npm ci` y `npm run dev`. Las pruebas del formulario se ejecutan con `npm test`.
 
 ## Configuración comercial
 
@@ -50,46 +50,38 @@ window.PRIMOFFICE_SITE_CONFIG = {
 };
 ```
 
-El formulario valida los campos requeridos y abre WhatsApp con la consulta completa. El sitio no guarda la información. El email configurado se ofrece como canal alternativo mediante `mailto:`.
+El formulario inicia un POST a `https://setupoficina.com.ar/api/corporate-leads` y abre WhatsApp inmediatamente con el mensaje aprobado. El backend registra la consulta en Odoo; un fallo de registro no impide abrir WhatsApp y se informa en el estado del formulario. El email configurado se ofrece como canal alternativo mediante `mailto:`.
 
 Aunque la configuración funcional usa `preview: false`, `site/index.html` conserva `noindex,nofollow` mientras la landing se revisa en el hostname temporal.
 
-## Cloudflare Pages — configuración recomendada
+## Cloudflare: configuración verificada
 
-El proyecto está preparado como HTML estático, sin framework ni paso de build.
+La landing está desplegada como Worker con assets estáticos, con el nombre `primoffice-empresas`, en la cuenta de PrimOffice. No es un proyecto Pages. `wrangler.jsonc` conserva el hostname temporal y publica únicamente `site/`.
 
-Configuración:
+- Validar antes de publicar: `npm test` y `npm run deploy:check`.
+- Revisar el diff completo antes de cada publicación.
+- Publicar en la cuenta verificada: `npm run deploy -- --profile primoffice`.
+- Hostname actual: https://primoffice-empresas.primoffice.workers.dev/
 
-- Production branch: `main`
-- Framework preset: `None`
-- Build command: `exit 0` (también puede quedar vacío si la interfaz lo permite)
-- Build output directory: `site`
-- Root directory: raíz del repo
+## CRM corporativo
 
-La revisión pública actual se realiza en:
+El endpoint independiente está en `setupoficina-landing/functions/api/corporate-leads.js`, dentro del backend Pages que ya contiene los secretos Odoo. No usa ni modifica `/api/leads`, el test, los niveles Starter/Pro/Epic ni Tiendanube.
 
-`https://primoffice-empresas.primoffice.workers.dev/`
+Variables existentes requeridas en la producción de SetupOficina: `ODOO_ENABLED`, `ODOO_URL`, `ODOO_DB`, `ODOO_USERNAME`, `ODOO_API_KEY`. Empresas no requiere secretos Odoo.
 
-Documentación oficial revisada para esta estructura:
+El backend valida los siete campos, consulta `crm.lead.fields_get` y crea una oportunidad `{Empresa} — {Tipo de proyecto}` con la etiqueta exclusiva `Empresas - Landing`. La empresa también queda en la descripción y en `partner_name` cuando el modelo real lo admite. No se reintenta automáticamente una creación que falla, para evitar duplicados ante una respuesta incierta.
 
-- https://developers.cloudflare.com/pages/framework-guides/deploy-anything/
-- https://developers.cloudflare.com/pages/get-started/git-integration/
+## Subdominio definitivo: pendiente
 
-## Subdominio definitivo
+Destino: https://empresas.primoffice.com.ar/
 
-El destino planteado es:
+El 10/09/2026 la zona `primoffice.com.ar` no estaba disponible en las cuentas Cloudflare autenticadas y sus DNS autoritativos estaban en AWS. No se modificaron registros ni nameservers.
 
-`empresas.primoffice.com.ar`
+Se debe habilitar la zona para asociar un **Custom Domain del Worker** en la cuenta de PrimOffice. No crear un CNAME manual hacia workers.dev. La gestión de la zona queda fuera de esta publicación.
 
-Una vez que la vista previa esté aprobada:
+Solo después de asociar el dominio y verificar HTTPS, HTTP 200, assets, navegación y formulario en desktop/mobile, retirar `noindex,nofollow` de `site/index.html` y agregar `<link rel="canonical" href="https://empresas.primoffice.com.ar/">`. Mientras tanto, conservar noindex.
 
-**Workers & Pages → proyecto → Custom domains → Set up a domain**
-
-Si el DNS de `primoffice.com.ar` no está administrado en la misma cuenta de Cloudflare, se deberá crear el CNAME indicado por Cloudflare para el subdominio.
-
-Documentación oficial:
-
-- https://developers.cloudflare.com/pages/configuration/custom-domains/
+Referencia: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
 
 ## Criterios aplicados en esta versión
 

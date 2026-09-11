@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "primoffice-empresas",
+  "account_id": "a29f0f240aa395b57629ff6d17aff7d4",
+  "compatibility_date": "2026-09-08",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./site"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

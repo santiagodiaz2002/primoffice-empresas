@@ -5,3 +5,7 @@ Thumbs.db
 .env.*
 .vscode/
 .idea/
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*

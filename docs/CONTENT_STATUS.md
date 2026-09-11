@@ -13,9 +13,10 @@
 - Envíos a todo el país, a una dirección o individualizados para colaboradores, con seguimiento por envío.
 - Factura A y B, órdenes de compra, posibilidad de contemplar los plazos de pago habituales de la empresa y alta como proveedor.
 - Capacidades documentadas: grabado láser sobre aluminio, hot stamping en cuero, impresión en packaging, tarjetas y cintas, color personalizado en mats, mockups de marca y kitting.
-- El formulario valida los datos y abre WhatsApp con el mensaje completo. El sitio no almacena la información enviada.
+- El formulario inicia el registro de la consulta en Odoo mediante el endpoint corporativo aislado de SetupOficina y abre WhatsApp con el mensaje completo, incluso si falla el CRM.
 - El email funciona como canal alternativo mediante `mailto:`.
 - La configuración funcional usa `preview: false`; se conserva `noindex,nofollow` mientras la revisión se realiza en el hostname temporal.
+- Martín aprobó lanzar esta versión, según la autorización recibida para esta publicación.
 
 Las condiciones comerciales se recuperaron de `docs/primofficelandingcorporativa-original.html`, aceptado como referencia para esta etapa. El contacto y la dirección se contrastaron con el sitio oficial actual de PrimOffice. El HTML original usaba `corporativo@primoffice.com.ar`; se adoptó `info@primoffice.com.ar` porque es el correo publicado actualmente por PrimOffice y el indicado para esta ejecución.
 
@@ -40,10 +41,8 @@ Las once fotografías están integradas en el hero, soluciones, portfolio y dife
 ## Pendiente real
 
 1. Casos de éxito reales, con necesidad, solución, resultado y autorización de publicación.
-2. Confirmación final de Martín sobre la autorización para publicar los logos/clientes en producción.
-3. Aprobación y configuración externa del subdominio definitivo `empresas.primoffice.com.ar`.
-4. Definir una futura integración con backend o CRM si se decide almacenar leads; la implementación actual no guarda datos.
-5. Retirar `noindex,nofollow` únicamente cuando se apruebe la publicación en el dominio definitivo.
+2. Configuración externa del subdominio definitivo `empresas.primoffice.com.ar`.
+3. Retirar `noindex,nofollow` únicamente después de activar y validar el dominio definitivo.
 
 ## No publicado deliberadamente
 

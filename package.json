@@ -1,0 +1,14 @@
+{
+  "name": "primoffice-empresas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "node --test tests/*.test.mjs",
+    "deploy:check": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.130.0"
+  }
+}
