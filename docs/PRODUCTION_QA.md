@@ -10,7 +10,7 @@
 ## QA público en el hostname actual
 
 - HTTPS y HTTP 200.
-- HTML publicado idéntico al archivo local; 29 assets referenciados responden 200 y coinciden byte a byte con los archivos locales.
+- HTML publicado idéntico al archivo local; los 29 assets referenciados responden 200. Tras el deploy automático, 28 coinciden byte a byte con la copia local. `arcelormittal.svg` coincide exactamente con Git: Cloudflare usa LF y la copia Windows usa CRLF, sin diferencias de contenido.
 - Desktop 1440 y mobile 390: inspección visual, formulario legible, sin desborde horizontal ni imágenes rotas.
 - Navegación a contacto y menú mobile verificados (abre, navega y cierra).
 - Preflight del backend: 204, CORS permite el hostname de Empresas.
