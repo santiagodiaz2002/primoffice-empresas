@@ -71,10 +71,11 @@ test('envíos repetidos durante el registro no duplican llamadas CRM', async () 
   resolve({ ok: true });
 });
 
-test('HTML mantiene noindex y solo cambia la nota del formulario', () => {
-  const oldHtml = execFileSync('git', ['show', '1c30442f1aedd9b5989282aa3534f45d2ad60f89:site/index.html'], { encoding: 'utf8' });
+test('HTML conserva la versión aprobada y el SEO de producción', () => {
+  const oldHtml = execFileSync('git', ['show', 'f685a02616cc2ade40c1f4778dc81e0c9711d4b0:site/index.html'], { encoding: 'utf8' });
   const html = fs.readFileSync(new URL('../site/index.html', import.meta.url), 'utf8');
   const stripNote = (text) => text.replace(/\r\n/g, '\n').replace(/(<p class="form-note"[^>]*>)[\s\S]*?(<\/p>)/, '$1$2');
   assert.equal(stripNote(html), stripNote(oldHtml));
-  assert.match(html, /noindex,nofollow/);
+  assert.doesNotMatch(html, /\bnoindex\b/i);
+  assert.match(html, /<link rel="canonical" href="https:\/\/empresas\.primoffice\.com\.ar\/">/);
 });
