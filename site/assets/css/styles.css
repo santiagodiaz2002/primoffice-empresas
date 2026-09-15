@@ -587,6 +587,102 @@ textarea {
   font-size: 0.85rem;
 }
 
+.product-carousel {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.product-carousel-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 44px;
+  width: fit-content;
+  margin: 0 0 8px auto;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.product-carousel-pause {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--brand-deep);
+}
+
+.product-carousel-viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
+}
+
+.product-carousel-track {
+  display: flex;
+  width: max-content;
+  animation: product-carousel-loop 52s linear infinite;
+}
+
+.product-carousel-group {
+  display: flex;
+  flex: none;
+  gap: 16px;
+  padding-right: 16px;
+}
+
+.product-carousel-group img {
+  flex: none;
+  width: auto;
+  max-width: none;
+  height: clamp(180px, 22vw, 260px);
+  object-fit: contain;
+  background: var(--paper-soft);
+}
+
+.product-carousel:has(.product-carousel-pause:checked) .product-carousel-track,
+.product-carousel-viewport:hover .product-carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes product-carousel-loop {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-carousel-control {
+    display: none;
+  }
+
+  .product-carousel-viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .product-carousel-track {
+    width: auto;
+    animation: none;
+  }
+
+  .product-carousel-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    width: 100%;
+    padding: 0;
+  }
+
+  .product-carousel-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .product-carousel-group img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}
+
 .work-section {
   color: var(--white);
   background: var(--night);
