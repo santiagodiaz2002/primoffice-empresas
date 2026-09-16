@@ -184,4 +184,69 @@
         : "No hay un canal de contacto disponible en este momento.";
     });
   }
+
+  const workCarousel = document.querySelector(".work-carousel");
+  const workLightbox = document.querySelector("[data-work-lightbox]");
+  const workLightboxImage = document.querySelector("[data-work-lightbox-image]");
+  const workLightboxClose = document.querySelector("[data-work-lightbox-close]");
+
+  if (
+    workCarousel &&
+    workLightbox &&
+    workLightboxImage &&
+    workLightboxClose &&
+    typeof workLightbox.showModal === "function"
+  ) {
+    const originalImages = Array.from(
+      workCarousel.querySelectorAll('.work-carousel-group:not([aria-hidden="true"]) img')
+    );
+
+    const openWorkLightbox = (image) => {
+      const source = image.getAttribute("src");
+      const originalImage = originalImages.find(
+        (item) => item.getAttribute("src") === source
+      );
+
+      workLightboxImage.src = image.currentSrc || image.src;
+      workLightboxImage.alt = originalImage?.alt || image.alt || "";
+
+      workLightbox.showModal();
+      document.body.classList.add("work-lightbox-open");
+    };
+
+    originalImages.forEach((image) => {
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", `${image.alt}. Abrir imagen ampliada`);
+
+      image.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openWorkLightbox(image);
+      });
+    });
+
+    workCarousel.addEventListener("click", (event) => {
+      const image = event.target.closest(".work-carousel-group img");
+      if (!image) return;
+
+      openWorkLightbox(image);
+    });
+
+    workLightboxClose.addEventListener("click", () => {
+      workLightbox.close();
+    });
+
+    workLightbox.addEventListener("click", (event) => {
+      if (event.target === workLightbox) {
+        workLightbox.close();
+      }
+    });
+
+    workLightbox.addEventListener("close", () => {
+      document.body.classList.remove("work-lightbox-open");
+      workLightboxImage.removeAttribute("src");
+      workLightboxImage.alt = "";
+    });
+  }
 })();
