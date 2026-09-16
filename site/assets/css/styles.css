@@ -118,6 +118,7 @@ textarea {
 }
 
 .brand {
+  position: relative;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -128,13 +129,15 @@ textarea {
 }
 
 .brand-descriptor {
-  flex-shrink: 0;
-  margin-left: 12px;
-  padding-left: 12px;
-  border-left: 1px solid var(--line);
+  position: absolute;
+  bottom: 0;
+  left: 28%;
   color: var(--ink-soft);
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -1285,9 +1288,7 @@ body.work-lightbox-open {
 
 @media (max-width: 1120px) {
   .brand-descriptor {
-    margin-left: 8px;
-    padding-left: 8px;
-    font-size: 0.7rem;
+    font-size: 0.55rem;
   }
 
   .main-nav {
