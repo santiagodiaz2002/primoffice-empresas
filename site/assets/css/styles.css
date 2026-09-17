@@ -118,7 +118,6 @@ textarea {
 }
 
 .brand {
-  position: relative;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -129,15 +128,13 @@ textarea {
 }
 
 .brand-descriptor {
-  position: absolute;
-  bottom: 0;
-  left: 28%;
+  flex-shrink: 0;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
   color: var(--ink-soft);
-  font-size: 0.6rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -992,6 +989,57 @@ body.work-lightbox-open {
   }
 }
 
+.reviews-section h2 {
+  max-width: 22ch;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(24px, 3vw, 40px);
+  background: var(--paper-soft);
+  border-top: 2px solid var(--brand-deep);
+}
+
+.review-card > p {
+  margin: 0 0 20px;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.review-card footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.review-card footer strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.review-card footer span {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 680px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .faq-grid {
   display: grid;
   grid-template-columns: minmax(300px, 0.78fr) minmax(500px, 1.22fr);
@@ -1288,7 +1336,9 @@ body.work-lightbox-open {
 
 @media (max-width: 1120px) {
   .brand-descriptor {
-    font-size: 0.55rem;
+    margin-left: 8px;
+    padding-left: 8px;
+    font-size: 0.7rem;
   }
 
   .main-nav {
