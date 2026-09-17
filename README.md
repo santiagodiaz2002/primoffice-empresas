@@ -50,9 +50,11 @@ window.PRIMOFFICE_SITE_CONFIG = {
 };
 ```
 
-El formulario inicia un POST a `https://setupoficina.com.ar/api/corporate-leads` y abre WhatsApp inmediatamente con el mensaje aprobado. El backend registra la consulta en Odoo; un fallo de registro no impide abrir WhatsApp y se informa en el estado del formulario. El email configurado se ofrece como canal alternativo mediante `mailto:`.
+El formulario envía email y WhatsApp separados, cantidad obligatoria y atribución de sesión a `https://setupoficina.com.ar/api/corporate-leads`. Espera una respuesta HTTP exitosa con `{ok: true, id}` antes de emitir `generate_lead` y mostrar «Recibimos tu consulta». WhatsApp queda como acción opcional posterior con el mensaje preparado. Los fallos conservan los datos y permiten reintentar; no hay reintentos automáticos.
 
-Aunque la configuración funcional usa `preview: false`, `site/index.html` conserva `noindex,nofollow` mientras la landing se revisa en el hostname temporal.
+El mensaje personalizado de WhatsApp se conserva en memoria y se abre únicamente con el clic del usuario. El enlace visible mantiene un mensaje genérico, sin datos del formulario, para evitar que la medición automática de enlaces capture PII en `link_url`. Los eventos manuales solo incluyen el nombre del evento y, para errores, `error_type`.
+
+La configuración funcional usa `preview: false`; el HTML actual es indexable y conserva el canonical `https://empresas.primoffice.com.ar/`.
 
 ## Cloudflare: configuración verificada
 
@@ -69,17 +71,21 @@ El endpoint independiente está en `setupoficina-landing/functions/api/corporate
 
 Variables existentes requeridas en la producción de SetupOficina: `ODOO_ENABLED`, `ODOO_URL`, `ODOO_DB`, `ODOO_USERNAME`, `ODOO_API_KEY`. Empresas no requiere secretos Odoo.
 
-El backend valida los siete campos, consulta `crm.lead.fields_get` y crea una oportunidad `{Empresa} — {Tipo de proyecto}` con la etiqueta exclusiva `Empresas - Landing`. La empresa también queda en la descripción y en `partner_name` cuando el modelo real lo admite. No se reintenta automáticamente una creación que falla, para evitar duplicados ante una respuesta incierta.
+La implementación vigente está en el worktree hermano `setupoficina-corporate-leads`, branch `codex/corporate-leads`, del mismo repositorio `setupoficina-landing`. El backend valida los ocho campos comerciales, consulta `crm.lead.fields_get` y crea una oportunidad `{Empresa} — {Tipo de proyecto}` con la etiqueta exclusiva `Empresas - Landing`. Guarda email en `email_from`, WhatsApp en `phone` y el registro estructurado completo en el campo existente `description`, después del texto comercial, delimitado por `--- PRIMOFFICE CORPORATE DATA v1 ---` y `--- END PRIMOFFICE CORPORATE DATA ---`. NO requiere migración Odoo ni custom field. Conserva click IDs, UTMs, landing/referrer iniciales, timestamp servidor, `status: "new"` y `estimated_value`, `quoted_value`, `final_sale_value` como `null`. Una segunda etapa podrá migrar el bloque a campos propios si se desea; no hay importación offline en esta entrega. No modifica la persistencia D1 de otros endpoints.
 
-## Subdominio definitivo: pendiente
+RIESGO PREEXISTENTE: odoo.setupoficina.com.ar actualmente solo expone HTTP públicamente; su remediación de infraestructura queda fuera de esta entrega.
+
+## QA del flujo de campañas (local)
+
+`npm test` cubre eventos con `gtag` simulado, atribución, validación, errores y envíos simultáneos. Para comprobar ambos repositorios en un navegador: `node tests/qa-server.mjs ../setupoficina-corporate-leads`, luego abrir `http://127.0.0.1:8787/`. Este harness ejecuta el endpoint real con XML-RPC/Odoo simulado en memoria. Sustituye únicamente el transporte de Analytics y del endpoint en la respuesta local, bloquea conexiones externas y evita navegar a WhatsApp/email. No se publica: el Worker sirve solo `site/`.
+
+`GET /__qa/state` permite inspeccionar requests y registros locales, incluida la descripción con el bloque JSON; `POST /__qa/fail-next` simula un fallo de creación. Reiniciar el harness borra sus datos. No usar producción para estas pruebas. Publicar primero el backend compatible y luego el frontend en una etapa de publicación explícitamente autorizada, sin migración Odoo previa.
+
+## Subdominio definitivo
 
 Destino: https://empresas.primoffice.com.ar/
 
-El 10/09/2026 la zona `primoffice.com.ar` no estaba disponible en las cuentas Cloudflare autenticadas y sus DNS autoritativos estaban en AWS. No se modificaron registros ni nameservers.
-
-Se debe habilitar la zona para asociar un **Custom Domain del Worker** en la cuenta de PrimOffice. No crear un CNAME manual hacia workers.dev. La gestión de la zona queda fuera de esta publicación.
-
-Solo después de asociar el dominio y verificar HTTPS, HTTP 200, assets, navegación y formulario en desktop/mobile, retirar `noindex,nofollow` de `site/index.html` y agregar `<link rel="canonical" href="https://empresas.primoffice.com.ar/">`. Mientras tanto, conservar noindex.
+El canonical ya está presente en el código actual y permanece intacto. La preparación de campañas no cambia DNS, dominios ni configuración de hosting. La verificación de cambios publicados se hará después de revisar los diffs y autorizar una publicación.
 
 Referencia: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
 

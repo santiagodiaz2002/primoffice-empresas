@@ -9,6 +9,30 @@
   const formNote = document.querySelector("[data-form-note]");
   const dateInput = document.querySelector("[data-date-input]");
   const projectSelect = document.querySelector("[data-project-select]");
+  const formSuccess = document.querySelector("[data-form-success]");
+  const successWhatsApp = document.querySelector("[data-success-wa]");
+  let successWhatsAppUrl = "";
+  const track = (name, params = {}) => {
+    // Analytics is optional and must never interrupt a persisted lead's confirmation.
+    try { window.gtag?.("event", name, params); } catch (_) { /* unavailable */ }
+  };
+  const attributionKeys = ["gclid", "gbraid", "wbraid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+  const attribution = {};
+  const storageKey = "primoffice.corporate.attribution";
+  let saved = {};
+  try { saved = JSON.parse(window.sessionStorage.getItem(storageKey)) || {}; } catch (_) { /* private mode */ }
+  const query = new URLSearchParams(window.location.search);
+  for (const key of [...attributionKeys, "landing_url", "referrer"]) {
+    if (typeof saved[key] === "string" && saved[key]) attribution[key] = saved[key];
+  }
+  for (const key of attributionKeys) {
+    const value = query.get(key);
+    if (!attribution[key] && value) attribution[key] = value;
+  }
+  attribution.landing_url ||= window.location.href;
+  // An empty initial referrer is meaningful: do not replace it on later loads.
+  attribution.referrer = typeof saved.referrer === "string" ? saved.referrer : document.referrer;
+  try { window.sessionStorage.setItem(storageKey, JSON.stringify(attribution)); } catch (_) { /* retain in memory */ }
 
   document.querySelectorAll("[data-year]").forEach((node) => {
     node.textContent = String(new Date().getFullYear());
@@ -76,6 +100,14 @@
     link.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
+    link.addEventListener("click", (event) => {
+      track("whatsapp_click");
+      if (link === successWhatsApp && successWhatsAppUrl) {
+        // Keep customer data out of link_url collected by automatic link tracking.
+        event.preventDefault();
+        window.open(successWhatsAppUrl, "_blank", "noopener,noreferrer");
+      }
+    });
   });
 
   document.querySelectorAll("[data-wa-display]").forEach((node) => {
@@ -85,6 +117,7 @@
   document.querySelectorAll("[data-email-link]").forEach((link) => {
     if (!corporateEmail) return;
     link.href = `mailto:${corporateEmail}?subject=${encodeURIComponent("Consulta corporativa PrimOffice")}`;
+    link.addEventListener("click", () => track("email_click"));
   });
 
   document.querySelectorAll("[data-email-display]").forEach((node) => {
@@ -103,7 +136,8 @@
       "",
       `Nombre: ${String(data.get("nombre") || "").trim()}`,
       `Empresa: ${String(data.get("empresa") || "").trim()}`,
-      `Contacto: ${String(data.get("contacto") || "").trim()}`,
+      `Email: ${String(data.get("email") || "").trim()}`,
+      `WhatsApp: ${String(data.get("phone") || "").trim()}`,
       `Proyecto: ${String(data.get("tipo") || "").trim()}`,
       data.get("cantidad") ? `Cantidad aproximada: ${String(data.get("cantidad")).trim()}` : "",
       `Fecha objetivo: ${formatDate(data.get("fecha"))}`,
@@ -112,76 +146,70 @@
     return lines.filter(Boolean).join("\n");
   };
 
-  const copyText = async (text) => {
-    if (!navigator.clipboard?.writeText) return false;
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  };
-
   if (form) {
-    if ((whatsappNumber || corporateEmail) && formNote) {
-      formNote.textContent = whatsappNumber
-        ? "Al enviar, registramos los datos de tu consulta para poder gestionarla y abrimos WhatsApp con el mensaje preparado."
-        : "Al enviar, registramos los datos de tu consulta para poder gestionarla y preparamos un email con el mensaje.";
-    }
-
+    const submitButton = form.querySelector('[type="submit"]');
+    const formGrid = form.querySelector(".form-grid");
+    const phoneInput = form.elements.namedItem("phone");
+    let formStarted = false;
     let registrationPending = false;
-    const registerInquiry = async (data) => {
-      if (registrationPending) return;
-      registrationPending = true;
-      try {
-        const response = await fetch("https://setupoficina.com.ar/api/corporate-leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(Object.fromEntries(data)),
-          keepalive: true
-        });
-        if (!response.ok) throw new Error("No se pudo registrar la consulta.");
-      } catch (_) {
-        formStatus.textContent = whatsappNumber
-          ? "No pudimos registrar la consulta. Podés continuar por WhatsApp con el mensaje preparado."
-          : "No pudimos registrar la consulta. Podés continuar por email.";
-      } finally {
-        registrationPending = false;
-      }
+    let submitted = false;
+    const startForm = () => {
+      if (formStarted) return;
+      formStarted = true;
+      track("form_start");
     };
+    form.addEventListener("input", startForm);
+    form.addEventListener("change", startForm);
+    phoneInput.addEventListener("input", () => phoneInput.setCustomValidity(""));
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (registrationPending || submitted) return;
       formStatus.textContent = "";
-
+      const phone = phoneInput.value.trim();
+      const digits = phone.replace(/\D/g, "");
+      phoneInput.setCustomValidity(/^\+?[\d\s().-]+$/.test(phone) && digits.length >= 8 && digits.length <= 15
+        ? "" : "Ingresá un WhatsApp válido, con código de área.");
       if (!form.checkValidity()) {
+        track("form_error", { error_type: "validation" });
         form.reportValidity();
         return;
       }
 
       const data = new FormData(form);
       const message = buildMessage(data);
-
-      // Iniciar el registro sin esperar la red: WhatsApp conserva la activación del clic.
-      void registerInquiry(data);
-
-      if (whatsappNumber) {
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-        formStatus.textContent = "Consulta preparada en WhatsApp.";
-        return;
+      registrationPending = true;
+      submitButton.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      formStatus.textContent = "Enviando consulta…";
+      try {
+        const response = await fetch("https://setupoficina.com.ar/api/corporate-leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...Object.fromEntries(data), ...attribution })
+        });
+        const result = await response.json();
+        if (!response.ok || result.ok !== true || !Number.isInteger(result.id) || result.id <= 0) {
+          throw new Error("Registration not confirmed");
+        }
+        submitted = true;
+        track("generate_lead");
+        formGrid.hidden = true;
+        submitButton.hidden = true;
+        formNote.hidden = true;
+        formStatus.textContent = "";
+        if (whatsappNumber) successWhatsAppUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        else successWhatsApp.hidden = true;
+        formSuccess.hidden = false;
+        formSuccess.focus();
+      } catch (_) {
+        track("form_error", { error_type: "backend" });
+        formStatus.textContent = "No pudimos confirmar el registro de tu consulta. Tus datos siguen en el formulario; podés volver a intentar.";
+      } finally {
+        registrationPending = false;
+        submitButton.disabled = submitted;
+        form.setAttribute("aria-busy", "false");
       }
-
-      if (corporateEmail) {
-        const subject = `Consulta corporativa · ${data.get("empresa") || "PrimOffice"}`;
-        window.location.href = `mailto:${corporateEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-        formStatus.textContent = "Consulta preparada en tu aplicación de email.";
-        return;
-      }
-
-      const copied = await copyText(message);
-      formStatus.textContent = copied
-        ? "Copiamos la consulta al portapapeles porque no hay un canal de contacto disponible."
-        : "No hay un canal de contacto disponible en este momento.";
     });
   }
 

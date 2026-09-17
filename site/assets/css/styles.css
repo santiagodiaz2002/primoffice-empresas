@@ -278,8 +278,8 @@ textarea {
 }
 
 .hero h1 {
-  max-width: 10.6ch;
-  font-size: clamp(3.5rem, 5.5vw, 5.8rem);
+  max-width: 15ch;
+  font-size: clamp(3rem, 4.2vw, 4.5rem);
 }
 
 .hero-lede {
@@ -346,6 +346,58 @@ textarea {
   border-top: 1px solid rgba(16, 34, 43, 0.14);
   font-size: 0.78rem;
   font-weight: 600;
+}
+
+.hero-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hero-benefits li {
+  white-space: nowrap;
+}
+
+.b2b-note {
+  margin-top: 28px;
+  padding: 16px 20px;
+  border-left: 3px solid var(--brand-deep);
+  background: var(--paper-blue);
+}
+
+.b2b-note h3,
+.b2b-note p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.b2b-note p {
+  margin-top: 5px;
+  color: var(--ink-soft);
+}
+
+.solutions-list .solution-seasonal {
+  background: var(--paper-blue);
+  border-left: 3px solid var(--brand-deep);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.seasonal-cta {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+}
+
+.solutions-list .solution-seasonal > span {
+  color: var(--ink-soft);
 }
 
 .hero-visual {
@@ -1261,6 +1313,21 @@ body.work-lightbox-open {
   margin-top: 30px;
 }
 
+.contact-form [hidden] {
+  display: none;
+}
+
+.form-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.form-success h3 {
+  margin-top: 16px;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
 .form-note,
 .form-status {
   margin: 13px 0 0;
@@ -1540,8 +1607,15 @@ body.work-lightbox-open {
   }
 
   .hero h1 {
-    max-width: 10ch;
-    font-size: clamp(2.85rem, 13.4vw, 4rem);
+    max-width: 15ch;
+    font-size: clamp(2.35rem, 10vw, 3.25rem);
+  }
+
+  .hero-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 0.7rem;
   }
 
   .hero-lede {
