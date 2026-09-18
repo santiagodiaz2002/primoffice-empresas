@@ -153,6 +153,10 @@
     let formStarted = false;
     let registrationPending = false;
     let submitted = false;
+    const submissionKey = "primoffice.corporate.submission";
+    let submissionId = "";
+    try { submissionId = window.sessionStorage.getItem(submissionKey) || ""; } catch (_) { /* retain in memory */ }
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(submissionId)) submissionId = "";
     const startForm = () => {
       if (formStarted) return;
       formStarted = true;
@@ -183,16 +187,20 @@
       form.setAttribute("aria-busy", "true");
       formStatus.textContent = "Enviando consulta…";
       try {
+        submissionId ||= window.crypto.randomUUID();
+        try { window.sessionStorage.setItem(submissionKey, submissionId); } catch (_) { /* retry keeps the ID in memory */ }
         const response = await fetch("https://setupoficina.com.ar/api/corporate-leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...Object.fromEntries(data), ...attribution })
+          body: JSON.stringify({ ...Object.fromEntries(data), ...attribution, submission_id: submissionId })
         });
         const result = await response.json();
         if (!response.ok || result.ok !== true || !Number.isInteger(result.id) || result.id <= 0) {
           throw new Error("Registration not confirmed");
         }
         submitted = true;
+        try { window.sessionStorage.removeItem(submissionKey); } catch (_) { /* storage unavailable */ }
+        submissionId = "";
         track("generate_lead");
         formGrid.hidden = true;
         submitButton.hidden = true;

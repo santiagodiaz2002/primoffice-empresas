@@ -8,37 +8,12 @@ import { pathToFileURL } from 'node:url';
 if (!process.argv[2]) throw new Error('Pass the verified corporate backend directory');
 const { onRequest } = await import(pathToFileURL(resolve(process.argv[2], 'functions/api/corporate-leads.js')));
 const root = resolve('site');
-const records = [];
+const { corporateOdoo } = await import(pathToFileURL(resolve(process.argv[2], 'tests/helpers/corporate-odoo.mjs')));
+const odoo = corporateOdoo();
+const records = odoo.records;
 const requests = [];
-let failNext = false;
-const fields = Object.fromEntries(Object.entries({ name: 'char', contact_name: 'char', partner_name: 'char', email_from: 'char', phone: 'char', description: 'html', tag_ids: 'many2many', type: 'selection' }).map(([key, type]) => [key, { type }]));
-const escape = x => String(x).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-const decode = x => x.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&apos;', "'").replaceAll('&amp;', '&');
-function xml(x) {
-  if (Array.isArray(x)) return `<value><array><data>${x.map(xml).join('')}</data></array></value>`;
-  if (x && typeof x === 'object') return `<value><struct>${Object.entries(x).map(([k, v]) => `<member><name>${k}</name>${xml(v)}</member>`).join('')}</struct></value>`;
-  if (typeof x === 'boolean') return `<value><boolean>${x ? 1 : 0}</boolean></value>`;
-  return `<value><${typeof x === 'number' ? 'int' : 'string'}>${escape(x)}</${typeof x === 'number' ? 'int' : 'string'}></value>`;
-}
-globalThis.fetch = async (url, options) => {
-  if (!String(url).startsWith('https://odoo.example.test/xmlrpc/2/')) throw new Error('External fetch forbidden in QA');
-  const body = options.body;
-  let result;
-  if (body.includes('<methodName>authenticate</methodName>')) result = 7;
-  else if (body.includes('<string>fields_get</string>')) result = fields;
-  else if (body.includes('<string>crm.tag</string>')) result = [19];
-  else if (body.includes('<string>crm.lead</string>') && body.includes('<string>create</string>')) {
-    if (failNext) { failNext = false; throw new Error('Simulated Odoo failure'); }
-    const values = {};
-    for (const key of ['name', 'contact_name', 'partner_name', 'email_from', 'phone', 'description']) {
-      const match = body.match(new RegExp(`<name>${key}</name><value><string>([\\s\\S]*?)</string></value>`));
-      if (match) values[key] = decode(match[1]);
-    }
-    records.push({ id: records.length + 1, ...values });
-    result = records.length;
-  } else throw new Error('Unexpected RPC');
-  return new Response(`<methodResponse><params><param>${xml(result)}</param></params></methodResponse>`);
-};
+let loseNextResponse = false;
+globalThis.fetch = odoo.fetch;
 const safetyScript = `
   window.__qa = { clicks: [], popups: [], shifts: [], lcp: [] };
   const realFetch = window.fetch.bind(window);
@@ -68,7 +43,8 @@ const server = createServer(async (req, res) => {
       res.setHeader('Content-Type', 'application/json');
       return res.end(JSON.stringify({ records, requests }));
     }
-    if (url.pathname === '/__qa/fail-next' && req.method === 'POST') { failNext = true; return res.end('ok'); }
+    if (url.pathname === '/__qa/fail-next' && req.method === 'POST') { odoo.failCreate = true; return res.end('ok'); }
+    if (url.pathname === '/__qa/lose-next-response' && req.method === 'POST') { loseNextResponse = true; return res.end('ok'); }
     if (url.pathname === '/__qa/lead' && req.method === 'POST') {
       const chunks = [];
       for await (const chunk of req) chunks.push(chunk);
@@ -79,6 +55,7 @@ const server = createServer(async (req, res) => {
         request: new Request('https://setupoficina.com.ar/api/corporate-leads', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'http://127.0.0.1:8787' }, body }),
         env: { ODOO_ENABLED: 'true', ODOO_URL: 'https://odoo.example.test', ODOO_DB: 'test-db', ODOO_USERNAME: 'test-user', ODOO_API_KEY: 'test-only-key' }
       });
+      if (loseNextResponse && response.ok) { loseNextResponse = false; req.socket.destroy(); return; }
       res.statusCode = response.status;
       res.setHeader('Content-Type', 'application/json');
       return res.end(await response.text());
